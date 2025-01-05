@@ -34,10 +34,9 @@ To understand the flow of all 6 tasks, a workflow session was attended as part o
 
 ---
 
-### **3. Created and Tested a C Program**
+### **3. Created and Tested a given Lab C Program**
 - Opened the terminal in Ubuntu and navigated to the correct directory using:
   ```bash
-  $ cd <directory_name>
-
+  $ cd 
 
 ------------------------------------------------------------------------------------------------------------------
