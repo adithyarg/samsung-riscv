@@ -28,7 +28,7 @@ RISC-V Talent Development Program, powered by Samsung Semiconductor India Resear
 
 ---
 
-### Created and Tested a given C Language based LAB**
+### C Language based LAB
 We have to follow the given steps to compile any **.c** file in our machine:
 1. Open the bash terminal and locate to the directory where you want to create your file. Then run the following command:
 
@@ -72,6 +72,7 @@ Compile the code using the RISC-V GCC compiler with the following flags:
 	riscv64-unknown-elf-objdump -d sum1ton.o | less
 	```
 4. The Assembly Language code of our C code will be displayed on the terminal. Type ```/main``` to locate the main section of our code.
+
 ![Objdump using -O1 format](https://github.com/maazm007/vsdsquadron-mini-internship/assets/83294849/dbf50220-d897-4b69-b33d-d0201fddb4fb)
 
 5. Compile with Optimization Level Ofast, Compile the code using the RISC-V GCC compiler with the following flags:
@@ -85,7 +86,8 @@ Compile the code using the RISC-V GCC compiler with the following flags:
 	riscv64-unknown-elf-objdump -d sum1ton.o | less
 	```
 7. The Assembly Language code of our C code will be displayed on the terminal. Type ```/main``` to locate the main section of our code.
-![Objdump using -O1 format](https://github.com/maazm007/vsdsquadron-mini-internship/assets/83294849/dbf50220-d897-4b69-b33d-d0201fddb4fb)
+
+![Objdump using -Ofast format](https://github.com/maazm007/vsdsquadron-mini-internship/assets/83294849/dbf50220-d897-4b69-b33d-d0201fddb4fb)
 
 ### *Descriptions of the keyword used in above command*   
 * **-O1:** Basic optimization level.
