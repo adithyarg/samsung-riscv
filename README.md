@@ -18,7 +18,7 @@ RISC-V Talent Development Program, powered by Samsung Semiconductor India Resear
 
 ### **1. Attended Workflow Session**
 To understand the flow of all 6 tasks, a workflow session was attended as part of the project initiation.  
-![Workflow Session](./Task1/attending_workflow_meet.png)
+![Workflow Session](https://github.com/adithyarg/samsung-riscv/blob/bf97b46df7c167c4adeb9452fd71c22ff97f8572/Task%20-%201/program%20flow%20meeting.png)
 
 ---
 
