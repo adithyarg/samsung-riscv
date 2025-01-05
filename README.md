@@ -8,7 +8,7 @@ RISC-V Talent Development Program, powered by Samsung Semiconductor India Resear
 **College:** Sahyadri College of Engineering and Management  
 **Email ID:** adithyar.ec23@sahyadri.edu.in  
 **GitHub Profile:** [Adithya](https://github.com/adithyarg?tab=repositories)  
-**LinkedIN Profile:** [adithya-rg](www.linkedin.com/in/adithya-rg-74a23b293)
+**LinkedIn Profile:** [adithya-rg](https://www.linkedin.com/in/adithya-rg-74a23b293/)
 
 ----------------------------------------------------------------------------------------------------------------
 
