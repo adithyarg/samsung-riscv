@@ -42,6 +42,17 @@ To understand the flow of all 6 tasks, a workflow session was attended as part o
   $ leafpad sum1ton.c &
 
 ![Developed a C program.](https://github.com/adithyarg/samsung-riscv/blob/8d8861fddf455f28ee2bc3192204ddb8c48c007c/Task%20-%201/Code%20of%20C%20based%20lab.png)
+
+---
+
+### **4. Compiled and Executed the C Program**
+- Compiled and executed the C program successfully in the terminal..
+  ```bash
+  $ gcc sum1ton.c
+  $ ./a.out
+
+![Developed a C program.](https://github.com/adithyarg/samsung-riscv/blob/8d8861fddf455f28ee2bc3192204ddb8c48c007c/Task%20-%201/Code%20of%20C%20based%20lab.png)
+
   
 
 ------------------------------------------------------------------------------------------------------------------
