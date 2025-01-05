@@ -53,41 +53,49 @@ We have to follow the given steps to compile any **.c** file in our machine:
 
 ### RISCV based LAB
 We have to do the same compilation of our code but this time using RISCV gcc compiler. Follow the given steps:  
-1. Open the terminal and run the given command:  
+1. Use the cat command to display the content of the sum1ton.c file in the terminal: 
 
 	```
 	cat sum_1ton.c
 	```
 ![cat Command](https://github.com/maazm007/vsdsquadron-mini-internship/assets/83294849/a272d8d0-63e5-4f00-9899-2223402be21d)
 
-2. Using the **cat** command, the entire C code will be displayed on the terminal. Now run the following command to compile the code in riscv64 gcc compiler:  
+2. Using the **cat** command, the entire C code will be displayed on the terminal. Compile with Optimization Level O1
+Compile the code using the RISC-V GCC compiler with the following flags:
 
 	```
 	riscv64-unknown-elf-gcc -O1 -mabi=lp64 -march=rv64i -o sum_1ton.o sum_1ton.c
-	```
-3. Open a new terminal and run the given command:    
+
+3. Open a new terminal and Generate the assembly language equivalent of the compiled object file using the objdump tool:    
 
 	```
-	riscv64-unknown-elf-objdump -d sum_1ton.o
+	riscv64-unknown-elf-objdump -d sum1ton.o | less
 	```
+4. The Assembly Language code of our C code will be displayed on the terminal. Type ```/main``` to locate the main section of our code.
 ![Objdump using -O1 format](https://github.com/maazm007/vsdsquadron-mini-internship/assets/83294849/dbf50220-d897-4b69-b33d-d0201fddb4fb)
 
-4. The Assembly Language code of our C code will be displayed on the terminal. Type ```/main``` to locate the main section of our code.  
+5. Compile with Optimization Level Ofast, Compile the code using the RISC-V GCC compiler with the following flags:
 
-### *Descriptions of the keyword used in above command*  
-* **-mabi=lp64:** This option specifies the ABI (Application Binary Interface) to use ```lp64```, which is for 64-bit integer, long and pointer size. This ABI is used for 64-bit RISCV architecture.  
-* **-march=rv64i:** This option specifies the architecture that we use, which is rv64i, indicates the 64-bit RISCV base integer instruction set. This also confirms the targeting of 64-bit architecture.  
-* **riscv-objdump:** A tool for disassembling RISC-V binaries, providing insights into the code structure and helping in debugging.  
-* **-Ofast:** The option -Ofast in the command ```riscv64-unknown-elf-gcc -Ofast -mabi=lp64 -march=rv64i -o sum1ton.o sum1ton.c``` is a compiler optimization flag used with the GNU Compiler Collection (GCC). This flag is used to instruct the compiler to optimize the generated code for maximum speed. The use of ```-Ofast``` is typically chosen for applications where execution speed is critical and where deviations from standard behavior are acceptable. However, it's important to test thoroughly, as this level of optimization can introduce subtle bugs, especially in complex calculations or when strict compliance with external standards is required.  
-* **-O1:** This options is an optimization level that tells the compiler to optimize the generated code but without greatly increasing compilation time. -O1 aims to reduce code size and execution time while keeping the compilation process relatively quick.  
+	```
+	riscv64-unknown-elf-gcc -Ofast -mabi=lp64 -march=rv64i -o sum1ton.o sum1ton.c
 
-#### *Other common options are as follows:*  
-> 1. **-O0:** No optimization, the default level if no -O option is specified.  
-> 2. **-O2:** More aggressive optimizations that might increase compilation time but typically provide faster and sometimes smaller code.  
-> 3. **-O3:** Maximizes optimization more aggressively than -O2.  
-> 4. **-Os:** Optimizes code for size. It enables all -O2 optimizations that do not typically increase code size.
+6. Open a new terminal and Generate the assembly language equivalent of the compiled object file using the objdump tool:    
 
-Here, the term **more aggressive optimization** in the context of compilers like GCC refers to a deeper and more complex set of transformations applied to the code in order to improve its performance and possibly reduce its size. The compiler uses more complex techniques that aims to generate faster executing code or code that occupies less memory. However, these optimizations typically increase the compilation time and can sometimes introduce bugs, making it harder to debug.
+	```
+	riscv64-unknown-elf-objdump -d sum1ton.o | less
+	```
+7. The Assembly Language code of our C code will be displayed on the terminal. Type ```/main``` to locate the main section of our code.
+![Objdump using -O1 format](https://github.com/maazm007/vsdsquadron-mini-internship/assets/83294849/dbf50220-d897-4b69-b33d-d0201fddb4fb)
+
+### *Descriptions of the keyword used in above command*   
+* **-O1:** Basic optimization level.
+* **-Ofast:** Maximum optimizations for speed, potentially altering standard behavior.
+* **-mabi=lp64:** Specifies the ABI (Application Binary Interface) for 64-bit architecture.  
+* **-march=rv64i:** argets the 64-bit RISC-V base integer instruction set.
+* **-o sum1ton.o:** Specifies the output file name.
+
+Comparison of **-O1:** and **-Ofast:**
+The -Ofast flag typically reduces the number of instructions by using advanced techniques like loop unrolling, vectorization, and other performance-enhancing strategies, resulting in faster code execution compared to -O1.
 </details>
 
 -------------------------------------------------
