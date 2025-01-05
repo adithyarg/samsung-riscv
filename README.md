@@ -46,7 +46,7 @@ We have to follow the given steps to compile any **.c** file in our machine:
   $ gcc sum1ton.c
   $ ./a.out
 ```
-![Executed a C program.](https://github.com/adithyarg/samsung-riscv/blob/36ab2b1e17f4fd08f3da0d9146c3c4f1af4fd923/Task%20-%201/Execution%20of%20C%20based%20lab.png)
+![Executed a C program.](https://github.com/adithyarg/samsung-riscv/blob/c69125f8dbb45277759690c3d67f8f0d9d2511cf/Task%20-%201/C%20Code%20compiled%20on%20gcc%20Compiler.png)
 
   
 ------------------------------------------------------------------------------------------------------------------
