@@ -20,7 +20,7 @@ RISC-V Talent Development Program, powered by Samsung Semiconductor India Resear
 - Downloaded the RISC-V workshop VDI file.
 - Installed Oracle VirtualBox and created a virtual machine with the following specifications:
   - **RAM:** 4 GB  
-  - **CPU Cores:** 2  
+  - **CPU Cores:** 4  
   - **Operating System:** Linux-based Ubuntu 18.04 LTS
 - Successfully set up the virtual environment and folder structure for further tasks.
 
