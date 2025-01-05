@@ -30,7 +30,7 @@ To understand the flow of all 6 tasks, a workflow session was attended as part o
   - **Operating System:** Linux-based Ubuntu 18.04 LTS
 - Successfully set up the virtual environment and folder structure for further tasks.
 
-![Ubuntu and VMBox Installation](./Task1/ubuntu_on_vmbox.png)
+![Ubuntu and VMBox Installation](https://github.com/adithyarg/samsung-riscv/blob/02f5373bd8c49656c3451b399060c7010b2eb032/Task%20-%201/Ubuntu%20and%20VMBox%20Installation.png)
 
 ---
 
