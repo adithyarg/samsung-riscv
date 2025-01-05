@@ -51,8 +51,7 @@ To understand the flow of all 6 tasks, a workflow session was attended as part o
   $ gcc sum1ton.c
   $ ./a.out
 
-![Developed a C program.](https://github.com/adithyarg/samsung-riscv/blob/8d8861fddf455f28ee2bc3192204ddb8c48c007c/Task%20-%201/Code%20of%20C%20based%20lab.png)
+![Executed a C program.](https://github.com/adithyarg/samsung-riscv/blob/36ab2b1e17f4fd08f3da0d9146c3c4f1af4fd923/Task%20-%201/Execution%20of%20C%20based%20lab.png)
 
   
-
 ------------------------------------------------------------------------------------------------------------------
