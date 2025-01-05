@@ -58,7 +58,7 @@ We have to do the same compilation of our code but this time using RISCV gcc com
 	```
 	cat sum_1ton.c
 	```
-![cat Command](https://github.com/maazm007/vsdsquadron-mini-internship/assets/83294849/a272d8d0-63e5-4f00-9899-2223402be21d)
+![cat Command](https://github.com/adithyarg/samsung-riscv/blob/610e60ce566fd879ff0601b4046d560e4882e05f/Task%20-%201/cat%20Command.png)
 
 2. Using the **cat** command, the entire C code will be displayed on the terminal. Compile with Optimization Level O1
 Compile the code using the RISC-V GCC compiler with the following flags:
