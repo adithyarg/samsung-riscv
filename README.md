@@ -41,7 +41,7 @@ To understand the flow of all 6 tasks, a workflow session was attended as part o
   $ sudo install leafpad
   $ leafpad sum1ton.c &
 
-![Developed a C program.](https://github.com/adithyarg/samsung-riscv/blob/02f5373bd8c49656c3451b399060c7010b2eb032/Task%20-%201/Ubuntu%20and%20VMBox%20Installation.png)
+![Developed a C program.](https://github.com/adithyarg/samsung-riscv/blob/8d8861fddf455f28ee2bc3192204ddb8c48c007c/Task%20-%201/Code%20of%20C%20based%20lab.png)
   
 
 ------------------------------------------------------------------------------------------------------------------
