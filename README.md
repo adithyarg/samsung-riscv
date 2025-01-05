@@ -35,8 +35,13 @@ To understand the flow of all 6 tasks, a workflow session was attended as part o
 ---
 
 ### **3. Created and Tested a given Lab C Program**
-- Opened the terminal in Ubuntu and navigated to the correct directory using:
+- Opened the terminal in Ubuntu, navigated to the correct directory, installed Leafpad, created a new file, and wrote the given C program in the lab.
   ```bash
-  $ cd 
+  $ cd
+  $ sudo install leafpad
+  $ leafpad sum1ton.c &
+
+![Developed a C program.](https://github.com/adithyarg/samsung-riscv/blob/02f5373bd8c49656c3451b399060c7010b2eb032/Task%20-%201/Ubuntu%20and%20VMBox%20Installation.png)
+  
 
 ------------------------------------------------------------------------------------------------------------------
