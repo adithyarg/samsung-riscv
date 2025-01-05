@@ -87,7 +87,7 @@ Compile the code using the RISC-V GCC compiler with the following flags:
 	```
 7. The Assembly Language code of our C code will be displayed on the terminal. Type ```/main``` to locate the main section of our code.
 
-![Objdump using -Ofast format](https://github.com/maazm007/vsdsquadron-mini-internship/assets/83294849/dbf50220-d897-4b69-b33d-d0201fddb4fb)
+![Objdump using -Ofast format](https://github.com/adithyarg/samsung-riscv/blob/5508c53ce209c8721039736cb7cceb97dc5a8f73/Task%20-%201/Objdump%20using%20-Ofast%20format.png)
 
 ### *Descriptions of the keyword used in above command*   
 * **-O1:** Basic optimization level.
