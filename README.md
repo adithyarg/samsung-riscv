@@ -24,7 +24,7 @@ RISC-V Talent Development Program, powered by Samsung Semiconductor India Resear
   - **Operating System:** Linux-based Ubuntu 18.04 LTS
 - Successfully set up the virtual environment and folder structure for further tasks.
 
-![Ubuntu and VMBox Installation](https://github.com/adithyarg/samsung-riscv/blob/02f5373bd8c49656c3451b399060c7010b2eb032/Task%20-%201/Ubuntu%20and%20VMBox%20Installation.png)
+![Ubuntu and VMBox Installation](https://github.com/adithyarg/samsung-riscv/blob/b59cedf0872e46a028c4f9a2169a92985824331f/Task%20-%201/Ubuntu%20and%20VMBox%20Installation.png)
 
 ---
 
