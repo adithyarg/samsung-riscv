@@ -13,7 +13,7 @@ RISC-V Talent Development Program, powered by Samsung Semiconductor India Resear
 ----------------------------------------------------------------------------------------------------------------
 
 <details>
-<summary><b>Task 1:</b> Task is to install all the essential tools required for this internship such as Ubuntu on VMBox, GNU Toolchain, GTKWave, Yosys and iVerilog simulator</summary>   
+<summary><b>Task 1:</b> Task 1: Installation of RISC-V Toolchain and Lab Setup</summary>   
 <br>
 
 **1. Install Ubuntu 20.04 LTS on Oracle Virtual Machine Box**
