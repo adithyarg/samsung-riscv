@@ -37,7 +37,7 @@ We have to follow the given steps to compile any **.c** file in our machine:
 
   ```bash
   $ cd
-  $ sudo install leafpad
+  $ sudo apt install leafpad
   $ leafpad sum1ton.c &
 ```
  2. This will open the editor and allows you to write into the file that you have created. You have to write the C code of printing the sum of n numbers. Once you are done with your code, press ```Ctrl + S``` to save your file, and then press ```Ctrl + W``` to close the editor.   
