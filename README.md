@@ -7,8 +7,7 @@ The program is led by the esteemed Kunal Ghosh, a trailblazer in the VLSI domain
 
 👤**Name:** ADITHYA  
 🎓**College:** Sahyadri College of Engineering and Management  
-📧**Email ID:** adithyar.ec23@sahyadri.edu.in / adithyarg14@gmail.com  
-📚**GitHub Profile:** [Adithya-Sahyadri-ECE](https://github.com/adithyarg?tab=repositories)  
+📚**Email ID:** adithyar.ec23@sahyadri.edu.in / adithyarg14@gmail.com   
 🌐**LinkedIN Profile:** [adithya-rg](https://www.linkedin.com/in/adithya-rg-74a23b293/)
 
 ----------------------------------------------------------------------------------------------------------------
