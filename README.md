@@ -1,14 +1,15 @@
 #  VSDSquadron-Mini Internship Program 2024-25
 
-RISC-V Talent Development Program, powered by Samsung Semiconductor India Research (SSIR) along with VLSI System Design (VSD). The instructor for this internship is Kunal Ghosh Sir.
+RISC-V Talent Development Program, Empowering future innovators, this program is powered by Samsung Semiconductor India Research (SSIR) in collaboration with VLSI System Design (VSD).
+The program is led by the esteemed Kunal Ghosh, a trailblazer in the VLSI domain.
 
 ##  Basic Details
 
-**Name:** Adithya  
-**College:** Sahyadri College of Engineering and Management  
-**Email ID:** adithyar.ec23@sahyadri.edu.in  
-**GitHub Profile:** [Adithya-Sahyadri-ECE](https://github.com/adithyarg?tab=repositories)  
-**LinkedIn Profile:** [adithya-rg](https://www.linkedin.com/in/adithya-rg-74a23b293/)
+👤**Name:** ADITHYA  
+🎓**College:** Sahyadri College of Engineering and Management
+📧**Email ID:** adithyar.ec23@sahyadri.edu.in / adithyarg14@gmail.com
+📚**GitHub Profile:** [Adithya-Sahyadri-ECE](https://github.com/adithyarg?tab=repositories)  
+🌐**LinkedIn Profile:** [adithya-rg](https://www.linkedin.com/in/adithya-rg-74a23b293/)
 
 ----------------------------------------------------------------------------------------------------------------
 
