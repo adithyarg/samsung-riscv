@@ -1,4 +1,4 @@
-#  VSDSquadron-Mini Internship Program 2024-25
+#  Samsung RISC-V Talent Development Program 2025
 
 RISC-V Talent Development Program, Empowering future innovators, this program is powered by Samsung Semiconductor India Research (SSIR) in collaboration with VLSI System Design (VSD).
 The program is led by the esteemed Kunal Ghosh, a trailblazer in the VLSI domain.
