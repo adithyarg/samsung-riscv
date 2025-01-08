@@ -5,11 +5,11 @@ The program is led by the esteemed Kunal Ghosh, a trailblazer in the VLSI domain
 
 ##  Basic Details
 
-**Name:** Maaz Mahmood Siddique  
-**College:** KIET Group of Institutions  
-**Email ID:** maazms999@gmail.com  
-**GitHub Profile:** [maazm007](https://github.com/maazm007?tab=repositories)  
-**LinkedIN Profile:** [maazm-ece-vlsi](https://www.linkedin.com/in/maazms-ece-vlsi/)
+**Name:** ADITHYA  
+**College:** Sahyadri College of Engineering and Management  
+**Email ID:** adithyar.ec23@sahyadri.edu.in / adithyarg14@gmail.com  
+**GitHub Profile:** [Adithya-Sahyadri-ECE](https://github.com/adithyarg?tab=repositories)  
+**LinkedIN Profile:** [adithya-rg](https://www.linkedin.com/in/adithya-rg-74a23b293/)
 
 ----------------------------------------------------------------------------------------------------------------
 
