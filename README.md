@@ -3,12 +3,15 @@
 RISC-V Talent Development Program, Empowering future innovators, this program is powered by Samsung Semiconductor India Research (SSIR) in collaboration with VLSI System Design (VSD).
 The program is led by the esteemed Kunal Ghosh, a trailblazer in the VLSI domain.
 
-##  Basic Details
+##  About Me
 
 👤**Name:** ADITHYA  
 🎓**College:** Sahyadri College of Engineering and Management  
 📚**Email ID:** adithyar.ec23@sahyadri.edu.in / adithyarg14@gmail.com   
-🌐**LinkedIN Profile:** [adithya-rg](https://www.linkedin.com/in/adithya-rg-74a23b293/)
+
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/adithyarg?tab=repositories)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/adithya-rg-74a23b293/)
+
 
 ----------------------------------------------------------------------------------------------------------------
 
