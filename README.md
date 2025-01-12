@@ -138,7 +138,7 @@ We have to follow the given steps to get output any **.c** file in our machine:
 	```
 	$ spike pk factofnum.o
 	```
-![Executed a C program using Spike functtion.](https://github.com/adithyarg/samsung-riscv/blob/c9407db3e7e9bbaed3c51b84ef52eee21c58d24c/Task%20-%202/factorial_output_spike.png)
+![Executed a C program using Spike functtion.](https://github.com/adithyarg/samsung-riscv/blob/1ec8ef880ee8793fd28ba7d75c4bbeff4ec0638d/Task%20-%202/simple%20C%20program%20(Factorial%20of%205)/factorial_output_spike.png)
 
 ### Compile with Optimization Level -O1
 We have to do the same compilation of our code but this time using RISCV gcc compiler. Follow the given steps:  
