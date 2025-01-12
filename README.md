@@ -104,3 +104,12 @@ The -Ofast flag typically reduces the number of instructions by using advanced t
 </details>
 
 -------------------------------------------------
+
+<details>
+<summary><b>Task 1:</b> Task 2: Running SPIKE Simulation with Compiler Optimization and Analyzing RISC-V Object Dumps</summary>   
+<br>
+
+
+</details>
+
+-------------------------------------------------
