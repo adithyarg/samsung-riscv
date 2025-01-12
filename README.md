@@ -144,9 +144,9 @@ We have to follow the given steps to get output any **.c** file in our machine:
 We have to do the same compilation of our code but this time using RISCV gcc compiler. Follow the given steps:  
 1. Compile the code using the RISC-V GCC compiler with the following flags:
 
-```
+	```
 	$ riscv64-unknown-elf-gcc -O1 -mabi=lp64 -march=rv64i -o factofnum.o factofnum.c
-```
+	```
 
 2. Open a new terminal and Generate the assembly language equivalent of the compiled object file using the objdump tool:    
 
@@ -161,9 +161,9 @@ We have to do the same compilation of our code but this time using RISCV gcc com
 We have to do the same compilation of our code but this time using RISCV gcc compiler. Follow the given steps:  
 1. Compile the code using the RISC-V GCC compiler with the following flags:
 
-```
+	```
 	$ riscv64-unknown-elf-gcc -Ofast -mabi=lp64 -march=rv64i -o factofnum.o factofnum.c
-```
+	```
 
 2. Open a new terminal and Generate the assembly language equivalent of the compiled object file using the objdump tool:    
 
@@ -178,7 +178,7 @@ We have to do the same compilation of our code but this time using RISCV gcc com
 We have to do the same compilation of our code but this time using SPIKE debug compiler. Follow the given steps:  
 1. Compile the code using the SPIKE debug compiler with the following flags:
 
-```
+	```
 	$ spike -d pk factofnum.o
 	$ until pc 0 101d4
 	$ reg 0 sp
@@ -188,7 +188,7 @@ We have to do the same compilation of our code but this time using SPIKE debug c
 	$ reg 0 sp
 
 	$ reg 0 sp
-```
+	```
 
 ![Spike debug -01 format](https://github.com/adithyarg/samsung-riscv/blob/8cde30c63a81b49bcb5e06c3c164366b50582ace/Task%20-%202/spike_debug_factorial_O1.png)
 
@@ -196,7 +196,7 @@ We have to do the same compilation of our code but this time using SPIKE debug c
 We have to do the same compilation of our code but this time using SPIKE debug compiler. Follow the given steps:  
 1. Compile the code using the SPIKE debug compiler with the following flags:
 
-```
+	```
 	$ spike -d pk factofnum.o
 	$ until pc 0 100b0
 	$ reg 0 a0
@@ -209,7 +209,7 @@ We have to do the same compilation of our code but this time using SPIKE debug c
 	$ until pc 0 100b4
 
 	$ reg 0 sp
-```
+	```
 
 ![Spike debug -0fast format](https://github.com/adithyarg/samsung-riscv/blob/58e955a57516801fb2b9a5b1f6ac1bba48f03f29/Task%20-%202/spike_debug_factorial_Ofast.png)
 
