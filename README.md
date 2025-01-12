@@ -108,7 +108,30 @@ The -Ofast flag typically reduces the number of instructions by using advanced t
 <details>
 <summary><b>Task 1:</b> Task 2: Running SPIKE Simulation with Compiler Optimization and Analyzing RISC-V Object Dumps</summary>   
 <br>
+	
+### C Language based Factorial Code
+We have to follow the given steps to compile any **.c** file in our machine:
+1. Open the bash terminal and locate to the directory where you want to create your file. Then run the following command:
 
+  ```bash
+  $ cd
+  $ leafpad factofnum.c &
+```
+ 2. This will open the editor and allows you to write into the file that you have created. You have to write the C code of printing the sum of n numbers. Once you are done with your code, press ```Ctrl + S``` to save your file, and then press ```Ctrl + W``` to close the editor.   
+
+![Developed a C program.](https://github.com/adithyarg/samsung-riscv/blob/8f1408c19e6ff497027abb9b34e66398c7efffc0/Task%20-%201/Code%20of%20C%20based%20lab.png)
+
+### Factorial Code Compilation and Output 
+We have to follow the given steps to get output any **.c** file in our machine:
+1. To the C code on your terminal, run the following command:
+
+  ```bash
+  $ gcc sum1ton.c
+  $ ./a.out
+```
+![Executed a C program.](https://github.com/adithyarg/samsung-riscv/blob/c69125f8dbb45277759690c3d67f8f0d9d2511cf/Task%20-%201/C%20Code%20compiled%20on%20gcc%20Compiler.png)
+
+### Factorial Code Spike Output
 
 </details>
 
