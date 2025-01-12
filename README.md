@@ -132,6 +132,87 @@ We have to follow the given steps to get output any **.c** file in our machine:
 ![Executed a C program.](https://github.com/adithyarg/samsung-riscv/blob/c69125f8dbb45277759690c3d67f8f0d9d2511cf/Task%20-%201/C%20Code%20compiled%20on%20gcc%20Compiler.png)
 
 ### Factorial Code Spike Output
+We have to follow the given steps to get output any **.c** file in our machine:
+1. To the C code on your terminal, run the following command:
+
+  ```bash
+  $ spike pk factofnum.o
+```
+![Executed a C program using Spike functtion.](https://github.com/adithyarg/samsung-riscv/blob/c69125f8dbb45277759690c3d67f8f0d9d2511cf/Task%20-%201/C%20Code%20compiled%20on%20gcc%20Compiler.png)
+
+### Compile with Optimization Level O1
+We have to do the same compilation of our code but this time using RISCV gcc compiler. Follow the given steps:  
+1. Compile the code using the RISC-V GCC compiler with the following flags:
+
+```
+	riscv64-unknown-elf-gcc -O1 -mabi=lp64 -march=rv64i -o factofnum.o factofnum.c
+```
+
+2. Open a new terminal and Generate the assembly language equivalent of the compiled object file using the objdump tool:    
+
+	```
+	riscv64-unknown-elf-objdump -d factofnum.o | less
+	```
+3. The Assembly Language code of our C code will be displayed on the terminal. Type ```/main``` to locate the main section of our code.
+
+![Objdump using -O1 format](https://github.com/adithyarg/samsung-riscv/blob/70786f6c2ee6d9739941617fa637965772c3abd2/Task%20-%201/Objdump%20using%20-O1%20format.png)
+
+### Compile with Optimization Level Ofast
+We have to do the same compilation of our code but this time using RISCV gcc compiler. Follow the given steps:  
+1. Compile the code using the RISC-V GCC compiler with the following flags:
+
+```
+	riscv64-unknown-elf-gcc -Ofast -mabi=lp64 -march=rv64i -o factofnum.o factofnum.c
+```
+
+2. Open a new terminal and Generate the assembly language equivalent of the compiled object file using the objdump tool:    
+
+	```
+	riscv64-unknown-elf-objdump -d factofnum.o | less
+	```
+3. The Assembly Language code of our C code will be displayed on the terminal. Type ```/main``` to locate the main section of our code.
+
+![Objdump using -Ofast format](https://github.com/adithyarg/samsung-riscv/blob/70786f6c2ee6d9739941617fa637965772c3abd2/Task%20-%201/Objdump%20using%20-O1%20format.png)
+
+### Debug with Optimization Level O1	
+We have to do the same compilation of our code but this time using SPIKE debug compiler. Follow the given steps:  
+1. Compile the code using the SPIKE debug compiler with the following flags:
+
+```
+	spike -d pk factofnum.o
+	until pc 0 101d4
+	reg 0 sp
+	q
+	spike -d pk factofnum.o
+	until pc 0 101d4
+	reg 0 sp
+
+	reg 0 sp
+```
+
+![Spike debug -01 format](https://github.com/adithyarg/samsung-riscv/blob/70786f6c2ee6d9739941617fa637965772c3abd2/Task%20-%201/Objdump%20using%20-O1%20format.png)
+
+### Debug with Optimization Level Ofast	
+We have to do the same compilation of our code but this time using SPIKE debug compiler. Follow the given steps:  
+1. Compile the code using the SPIKE debug compiler with the following flags:
+
+```
+	spike -d pk factofnum.o
+	until pc 0 100b0
+	reg 0 a0
+
+	reg 0 a0
+
+	reg 0 sp
+	q
+	spike -d pk factofnum.o
+	until pc 0 100b4
+
+	reg 0 sp
+```
+
+![Spike debug -0fast format](https://github.com/adithyarg/samsung-riscv/blob/70786f6c2ee6d9739941617fa637965772c3abd2/Task%20-%201/Objdump%20using%20-O1%20format.png)
+
 
 </details>
 
