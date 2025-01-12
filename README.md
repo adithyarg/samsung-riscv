@@ -211,7 +211,7 @@ We have to do the same compilation of our code but this time using SPIKE debug c
 	reg 0 sp
 ```
 
-![Spike debug -0fast format](https://github.com/adithyarg/samsung-riscv/blob/70786f6c2ee6d9739941617fa637965772c3abd2/Task%20-%201/Objdump%20using%20-O1%20format.png)
+![Spike debug -0fast format](https://github.com/adithyarg/samsung-riscv/blob/58e955a57516801fb2b9a5b1f6ac1bba48f03f29/Task%20-%202/spike_debug_factorial_Ofast.png)
 
 
 </details>
