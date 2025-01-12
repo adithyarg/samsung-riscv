@@ -190,7 +190,7 @@ We have to do the same compilation of our code but this time using SPIKE debug c
 	reg 0 sp
 ```
 
-![Spike debug -01 format](https://github.com/adithyarg/samsung-riscv/blob/70786f6c2ee6d9739941617fa637965772c3abd2/Task%20-%201/Objdump%20using%20-O1%20format.png)
+![Spike debug -01 format](https://github.com/adithyarg/samsung-riscv/blob/8cde30c63a81b49bcb5e06c3c164366b50582ace/Task%20-%202/spike_debug_factorial_O1.png)
 
 ### Debug with Optimization Level -Ofast	
 We have to do the same compilation of our code but this time using SPIKE debug compiler. Follow the given steps:  
