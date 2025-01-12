@@ -119,7 +119,7 @@ We have to follow the given steps to compile any **.c** file in our machine:
 	```
  2. This will open the editor and allows you to write into the file that you have created. You have to write the C code of printing the factorial of 5. Once you are done with your code, press ```Ctrl + S``` to save your file, and then press ```Ctrl + W``` to close the editor.  
 
-![Developed a C program.](https://github.com/adithyarg/samsung-riscv/blob/a047ccfc80804e3f5aa4f411eaf86c3f6a9c463d/Task%20-%202/factorial_code.png)
+![Developed a C program.](https://github.com/adithyarg/samsung-riscv/blob/6af07b893f4fce1ef6759ffc84705d234c831496/Task%20-%202/simple%20C%20program%20(Factorial%20of%205)/factorial_code.png)
 
 ### Factorial Code Compilation and Output 
 We have to follow the given steps to get output any **.c** file in our machine:
