@@ -35,20 +35,20 @@ The program is led by the esteemed Kunal Ghosh, a trailblazer in the VLSI domain
 We have to follow the given steps to compile any **.c** file in our machine:
 1. Open the bash terminal and locate to the directory where you want to create your file. Then run the following command:
 
-  ```bash
-  $ cd
-  $ sudo apt install leafpad
-  $ leafpad sum1ton.c &
-```
+	```
+	$ cd
+	$ sudo apt install leafpad
+	$ leafpad sum1ton.c &
+	```
  2. This will open the editor and allows you to write into the file that you have created. You have to write the C code of printing the sum of n numbers. Once you are done with your code, press ```Ctrl + S``` to save your file, and then press ```Ctrl + W``` to close the editor.   
 
 ![Developed a C program.](https://github.com/adithyarg/samsung-riscv/blob/8f1408c19e6ff497027abb9b34e66398c7efffc0/Task%20-%201/Code%20of%20C%20based%20lab.png)
 
 3. To the C code on your terminal, run the following command:
-  ```bash
-  $ gcc sum1ton.c
-  $ ./a.out
-```
+	```
+	$ gcc sum1ton.c
+	$ ./a.out
+	```
 ![Executed a C program.](https://github.com/adithyarg/samsung-riscv/blob/c69125f8dbb45277759690c3d67f8f0d9d2511cf/Task%20-%201/C%20Code%20compiled%20on%20gcc%20Compiler.png)
 
   
@@ -113,10 +113,10 @@ The -Ofast flag typically reduces the number of instructions by using advanced t
 We have to follow the given steps to compile any **.c** file in our machine:
 1. Open the bash terminal and locate to the directory where you want to create your file. Then run the following command:
 
-  ```bash
-  $ cd
-  $ leafpad factofnum.c &
-```
+	```
+	$ cd
+ 	$ leafpad factofnum.c &
+	```
  2. This will open the editor and allows you to write into the file that you have created. You have to write the C code of printing the factorial of 5. Once you are done with your code, press ```Ctrl + S``` to save your file, and then press ```Ctrl + W``` to close the editor.  
 
 ![Developed a C program.](https://github.com/adithyarg/samsung-riscv/blob/a047ccfc80804e3f5aa4f411eaf86c3f6a9c463d/Task%20-%202/factorial_code.png)
@@ -125,19 +125,19 @@ We have to follow the given steps to compile any **.c** file in our machine:
 We have to follow the given steps to get output any **.c** file in our machine:
 1. To the C code on your terminal, run the following command:
 
-  ```bash
-  $ gcc sum1ton.c
-  $ ./a.out
-```
+	```
+	$ gcc sum1ton.c
+	$ ./a.out
+	```
 ![Executed a C program.](https://github.com/adithyarg/samsung-riscv/blob/a41e110f3524da665c4d981eaf55a1a11a368286/Task%20-%202/factorial_code_output.png)
 
 ### Factorial Code Spike Output
 We have to follow the given steps to get output any **.c** file in our machine:
 1. To the C code on your terminal, run the following command:
 
-  ```bash
-  $ spike pk factofnum.o
-```
+	```
+	$ spike pk factofnum.o
+	```
 ![Executed a C program using Spike functtion.](https://github.com/adithyarg/samsung-riscv/blob/c9407db3e7e9bbaed3c51b84ef52eee21c58d24c/Task%20-%202/factorial_output_spike.png)
 
 ### Compile with Optimization Level -O1
