@@ -129,7 +129,7 @@ We have to follow the given steps to get output any **.c** file in our machine:
   $ gcc sum1ton.c
   $ ./a.out
 ```
-![Executed a C program.](https://github.com/adithyarg/samsung-riscv/blob/c69125f8dbb45277759690c3d67f8f0d9d2511cf/Task%20-%201/C%20Code%20compiled%20on%20gcc%20Compiler.png)
+![Executed a C program.](https://github.com/adithyarg/samsung-riscv/blob/a41e110f3524da665c4d981eaf55a1a11a368286/Task%20-%202/factorial_code_output.png)
 
 ### Factorial Code Spike Output
 We have to follow the given steps to get output any **.c** file in our machine:
