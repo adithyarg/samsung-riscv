@@ -172,7 +172,7 @@ We have to do the same compilation of our code but this time using RISCV gcc com
 	```
 3. The Assembly Language code of our C code will be displayed on the terminal. Type ```/main``` to locate the main section of our code.
 
-![Objdump using -Ofast format](https://github.com/adithyarg/samsung-riscv/blob/70786f6c2ee6d9739941617fa637965772c3abd2/Task%20-%201/Objdump%20using%20-O1%20format.png)
+![Objdump using -Ofast format](https://github.com/adithyarg/samsung-riscv/blob/df6692993c7d1c4616442c824a97ddebe77f21fd/Task%20-%202/main_factorial_Ofast.png)
 
 ### Debug with Optimization Level -O1	
 We have to do the same compilation of our code but this time using SPIKE debug compiler. Follow the given steps:  
