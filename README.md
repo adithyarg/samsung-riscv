@@ -211,7 +211,7 @@ We have to do the same compilation of our code but this time using SPIKE debug c
 	$ reg 0 sp
 	```
 
-![Spike debug -0fast format](https://github.com/adithyarg/samsung-riscv/blob/58e955a57516801fb2b9a5b1f6ac1bba48f03f29/Task%20-%202/spike_debug_factorial_Ofast.png)
+![Spike debug -0fast format](https://github.com/adithyarg/samsung-riscv/blob/4734bb6b77648581fc02f866ed1411349eef1465/Task%20-%202/simple%20C%20program%20(Factorial%20of%205)/spike_debug_factorial_Ofast.png)
 
 
 </details>
