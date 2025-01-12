@@ -155,7 +155,7 @@ We have to do the same compilation of our code but this time using RISCV gcc com
 	```
 3. The Assembly Language code of our C code will be displayed on the terminal. Type ```/main``` to locate the main section of our code.
 
-![Objdump using -O1 format](https://github.com/adithyarg/samsung-riscv/blob/efc8219db4529ff17a1177c222fa7a0ec5bdd5ef/Task%20-%202/main_factorial_O1.png)
+![Objdump using -O1 format](https://github.com/adithyarg/samsung-riscv/blob/2466c7383f4c996598b59b16c06145790ef313db/Task%20-%202/simple%20C%20program%20(Factorial%20of%205)/main_factorial_O1.png)
 
 ### Compile with Optimization Level -Ofast
 We have to do the same compilation of our code but this time using RISCV gcc compiler. Follow the given steps:  
