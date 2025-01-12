@@ -190,7 +190,7 @@ We have to do the same compilation of our code but this time using SPIKE debug c
 	$ reg 0 sp
 	```
 
-![Spike debug -01 format](https://github.com/adithyarg/samsung-riscv/blob/8cde30c63a81b49bcb5e06c3c164366b50582ace/Task%20-%202/spike_debug_factorial_O1.png)
+![Spike debug -01 format](https://github.com/adithyarg/samsung-riscv/blob/7928ee8141cf2d5b333444dca84c4e96a9d7ff8a/Task%20-%202/simple%20C%20program%20(Factorial%20of%205)/spike_debug_factorial_O1.png)
 
 ### Debug with Optimization Level -Ofast	
 We have to do the same compilation of our code but this time using SPIKE debug compiler. Follow the given steps:  
