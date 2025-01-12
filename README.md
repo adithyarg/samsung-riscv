@@ -59,7 +59,7 @@ We have to do the same compilation of our code but this time using RISCV gcc com
 1. Use the cat command to display the content of the sum1ton.c file in the terminal: 
 
 	```
-	cat sum1ton.c
+	$ cat sum1ton.c
 	```
 ![cat Command](https://github.com/adithyarg/samsung-riscv/blob/610e60ce566fd879ff0601b4046d560e4882e05f/Task%20-%201/cat%20Command.png)
 
@@ -67,12 +67,12 @@ We have to do the same compilation of our code but this time using RISCV gcc com
 Compile the code using the RISC-V GCC compiler with the following flags:
 
 	```
-	riscv64-unknown-elf-gcc -O1 -mabi=lp64 -march=rv64i -o sum1ton.o sum1ton.c
+	$ riscv64-unknown-elf-gcc -O1 -mabi=lp64 -march=rv64i -o sum1ton.o sum1ton.c
 
 3. Open a new terminal and Generate the assembly language equivalent of the compiled object file using the objdump tool:    
 
 	```
-	riscv64-unknown-elf-objdump -d sum1ton.o | less
+	$ riscv64-unknown-elf-objdump -d sum1ton.o | less
 	```
 4. The Assembly Language code of our C code will be displayed on the terminal. Type ```/main``` to locate the main section of our code.
 
@@ -81,12 +81,12 @@ Compile the code using the RISC-V GCC compiler with the following flags:
 5. Compile with Optimization Level Ofast, Compile the code using the RISC-V GCC compiler with the following flags:
 
 	```
-	riscv64-unknown-elf-gcc -Ofast -mabi=lp64 -march=rv64i -o sum1ton.o sum1ton.c
+	$ riscv64-unknown-elf-gcc -Ofast -mabi=lp64 -march=rv64i -o sum1ton.o sum1ton.c
 
 6. Open a new terminal and Generate the assembly language equivalent of the compiled object file using the objdump tool:    
 
 	```
-	riscv64-unknown-elf-objdump -d sum1ton.o | less
+	$ riscv64-unknown-elf-objdump -d sum1ton.o | less
 	```
 7. The Assembly Language code of our C code will be displayed on the terminal. Type ```/main``` to locate the main section of our code.
 
@@ -145,13 +145,13 @@ We have to do the same compilation of our code but this time using RISCV gcc com
 1. Compile the code using the RISC-V GCC compiler with the following flags:
 
 ```
-	riscv64-unknown-elf-gcc -O1 -mabi=lp64 -march=rv64i -o factofnum.o factofnum.c
+	$ riscv64-unknown-elf-gcc -O1 -mabi=lp64 -march=rv64i -o factofnum.o factofnum.c
 ```
 
 2. Open a new terminal and Generate the assembly language equivalent of the compiled object file using the objdump tool:    
 
 	```
-	riscv64-unknown-elf-objdump -d factofnum.o | less
+	$ riscv64-unknown-elf-objdump -d factofnum.o | less
 	```
 3. The Assembly Language code of our C code will be displayed on the terminal. Type ```/main``` to locate the main section of our code.
 
@@ -162,13 +162,13 @@ We have to do the same compilation of our code but this time using RISCV gcc com
 1. Compile the code using the RISC-V GCC compiler with the following flags:
 
 ```
-	riscv64-unknown-elf-gcc -Ofast -mabi=lp64 -march=rv64i -o factofnum.o factofnum.c
+	$ riscv64-unknown-elf-gcc -Ofast -mabi=lp64 -march=rv64i -o factofnum.o factofnum.c
 ```
 
 2. Open a new terminal and Generate the assembly language equivalent of the compiled object file using the objdump tool:    
 
 	```
-	riscv64-unknown-elf-objdump -d factofnum.o | less
+	$ riscv64-unknown-elf-objdump -d factofnum.o | less
 	```
 3. The Assembly Language code of our C code will be displayed on the terminal. Type ```/main``` to locate the main section of our code.
 
@@ -179,15 +179,15 @@ We have to do the same compilation of our code but this time using SPIKE debug c
 1. Compile the code using the SPIKE debug compiler with the following flags:
 
 ```
-	spike -d pk factofnum.o
-	until pc 0 101d4
-	reg 0 sp
-	q
-	spike -d pk factofnum.o
-	until pc 0 101d4
-	reg 0 sp
+	$ spike -d pk factofnum.o
+	$ until pc 0 101d4
+	$ reg 0 sp
+	$ q
+	$ spike -d pk factofnum.o
+	$ until pc 0 101d4
+	$ reg 0 sp
 
-	reg 0 sp
+	$ reg 0 sp
 ```
 
 ![Spike debug -01 format](https://github.com/adithyarg/samsung-riscv/blob/8cde30c63a81b49bcb5e06c3c164366b50582ace/Task%20-%202/spike_debug_factorial_O1.png)
@@ -197,18 +197,18 @@ We have to do the same compilation of our code but this time using SPIKE debug c
 1. Compile the code using the SPIKE debug compiler with the following flags:
 
 ```
-	spike -d pk factofnum.o
-	until pc 0 100b0
-	reg 0 a0
+	$ spike -d pk factofnum.o
+	$ until pc 0 100b0
+	$ reg 0 a0
 
-	reg 0 a0
+	$ reg 0 a0
 
-	reg 0 sp
-	q
-	spike -d pk factofnum.o
-	until pc 0 100b4
+	$ reg 0 sp
+	$ q
+	$ spike -d pk factofnum.o
+	$ until pc 0 100b4
 
-	reg 0 sp
+	$ reg 0 sp
 ```
 
 ![Spike debug -0fast format](https://github.com/adithyarg/samsung-riscv/blob/58e955a57516801fb2b9a5b1f6ac1bba48f03f29/Task%20-%202/spike_debug_factorial_Ofast.png)
