@@ -59,7 +59,7 @@ We have to do the same compilation of our code but this time using RISCV gcc com
 1. Use the cat command to display the content of the sum1ton.c file in the terminal: 
 
 	```
-	cat sum_1ton.c
+	cat sum1ton.c
 	```
 ![cat Command](https://github.com/adithyarg/samsung-riscv/blob/610e60ce566fd879ff0601b4046d560e4882e05f/Task%20-%201/cat%20Command.png)
 
@@ -67,7 +67,7 @@ We have to do the same compilation of our code but this time using RISCV gcc com
 Compile the code using the RISC-V GCC compiler with the following flags:
 
 	```
-	riscv64-unknown-elf-gcc -O1 -mabi=lp64 -march=rv64i -o sum_1ton.o sum_1ton.c
+	riscv64-unknown-elf-gcc -O1 -mabi=lp64 -march=rv64i -o sum1ton.o sum1ton.c
 
 3. Open a new terminal and Generate the assembly language equivalent of the compiled object file using the objdump tool:    
 
