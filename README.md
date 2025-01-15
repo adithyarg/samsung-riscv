@@ -277,6 +277,245 @@ Fields:
 > * imm[20], imm[10:1], imm[11], imm[19:12]: Encodes a 20-bit signed immediate value (jump offset).
 > * Example: jal x1, label (Jumps to label and stores return address in x1).
 
+
+### Analysis of Instructions
+
+1. **Instruction at address 0x1000b0:**
+   ```
+   ADD a0, a0, x1
+   ```
+   - Type: R-Type
+   - Opcode: 0110011
+   - `rd` = `a0` = `x10` = 01010
+   - `rs1` = `a0` = `x10` = 01010
+   - `rs2` = `x1` = 00001
+   - `func3` = 000
+   - `func7` = 0000000
+
+   **32-bit representation:**
+   ```
+   0000000_00001_01010_000_01010_0110011
+   ```
+
+2. **Instruction at address 0x1000b4:**
+   ```
+   ADDI sp, sp, -16
+   ```
+   - Type: I-Type
+   - Opcode: 0010011
+   - `rd` = `sp` = `x2` = 00010
+   - `rs1` = `sp` = `x2` = 00010
+   - Immediate = -16 = `1111111111110000` (12-bit, signed)
+
+   **32-bit representation:**
+   ```
+   111111111111_00010_000_00010_0010011
+   ```
+
+3. **Instruction at address 0x1000b8:**
+   ```
+   LI a1, 5
+   ```
+   - Pseudoinstruction for `ADDI a1, x0, 5`
+   - Type: I-Type
+   - Opcode: 0010011
+   - `rd` = `a1` = `x11` = 01011
+   - `rs1` = `x0` = 00000
+   - Immediate = 5 = `000000000101`
+
+   **32-bit representation:**
+   ```
+   000000000101_00000_000_01011_0010011
+   ```
+
+4. **Instruction at address 0x1000bc:**
+   ```
+   LUI a0, 464
+   ```
+   - Type: U-Type
+   - Opcode: 0110111
+   - `rd` = `a0` = `x10` = 01010
+   - Immediate = 464 << 12 = `000000000000011101000000000000`
+
+   **32-bit representation:**
+   ```
+   00000000000001110100_01010_0110111
+   ```
+
+5. **Instruction at address 0x1000c0:**
+   ```
+   JAL ra, 8
+   ```
+   - Type: J-Type
+   - Opcode: 1101111
+   - `rd` = `ra` = `x1` = 00001
+   - Offset = 8 (signed 20-bit)
+
+   **32-bit representation:**
+   ```
+   00000000000000000000_00001_1101111
+   ```
+
+6. **Instruction at address 0x1000c4:**
+   ```
+   ADDI sp, sp, 16
+   ```
+   - Type: I-Type
+   - Opcode: 0010011
+   - `rd` = `sp` = `x2` = 00010
+   - `rs1` = `sp` = `x2` = 00010
+   - Immediate = 16 = `0000000000010000`
+
+   **32-bit representation:**
+   ```
+   0000000000010000_00010_000_00010_0010011
+   ```
+
+7. **Instruction at address 0x1000c8:**
+   ```
+   JAL ra, -8
+   ```
+   - Type: J-Type
+   - Opcode: 1101111
+   - `rd` = `ra` = `x1` = 00001
+   - Offset = -8 (signed 20-bit)
+
+   **32-bit representation:**
+   ```
+   11111111111111111111_00001_1101111
+   ```
+
+8. **Instruction at address 0x1000cc:**
+   ```
+   RET
+   ```
+   - Pseudoinstruction for `JALR x0, x1, 0`
+   - Type: I-Type
+   - Opcode: 1100111
+   - `rd` = `x0` = 00000
+   - `rs1` = `x1` = 00001
+   - Immediate = 0 = `000000000000`
+
+   **32-bit representation:**
+   ```
+   000000000000_00001_000_00000_1100111
+   ```
+
+9. **Instruction at address 0x1000d0:**
+   ```
+   SUB x3, x4, x5
+   ```
+   - Type: R-Type
+   - Opcode: 0110011
+   - `rd` = `x3` = 00011
+   - `rs1` = `x4` = 00100
+   - `rs2` = `x5` = 00101
+   - `func3` = 000
+   - `func7` = 0100000
+
+   **32-bit representation:**
+   ```
+   0100000_00101_00100_000_00011_0110011
+   ```
+
+10. **Instruction at address 0x1000d4:**
+   ```
+   OR x7, x8, x9
+   ```
+   - Type: R-Type
+   - Opcode: 0110011
+   - `rd` = `x7` = 00111
+   - `rs1` = `x8` = 01000
+   - `rs2` = `x9` = 01001
+   - `func3` = 110
+   - `func7` = 0000000
+
+   **32-bit representation:**
+   ```
+   0000000_01001_01000_110_00111_0110011
+   ```
+
+11. **Instruction at address 0x1000d8:**
+   ```
+   AND x13, x14, x15
+   ```
+   - Type: R-Type
+   - Opcode: 0110011
+   - `rd` = `x13` = 01101
+   - `rs1` = `x14` = 01110
+   - `rs2` = `x15` = 01111
+   - `func3` = 111
+   - `func7` = 0000000
+
+   **32-bit representation:**
+   ```
+   0000000_01111_01110_111_01101_0110011
+   ```
+
+12. **Instruction at address 0x1000dc:**
+   ```
+   LW x20, 4(x21)
+   ```
+   - Type: I-Type
+   - Opcode: 0000011
+   - `rd` = `x20` = 10100
+   - `rs1` = `x21` = 10101
+   - Offset = 4 = `000000000100`
+   - `func3` = 010
+
+   **32-bit representation:**
+   ```
+   000000000100_10101_010_10100_0000011
+   ```
+
+13. **Instruction at address 0x1000e0:**
+   ```
+   SW x22, 8(x23)
+   ```
+   - Type: S-Type
+   - Opcode: 0100011
+   - `rs1` = `x23` = 10111
+   - `rs2` = `x22` = 10110
+   - Offset = 8 = `0000000001000`
+   - Split Immediate: `imm[11:5] = 0000000`, `imm[4:0] = 01000`
+   - `func3` = 010
+
+   **32-bit representation:**
+   ```
+   0000000_10110_10111_010_01000_0100011
+   ```
+
+14. **Instruction at address 0x1000e4:**
+   ```
+   BEQ x24, x25, -4
+   ```
+   - Type: B-Type
+   - Opcode: 1100011
+   - `rs1` = `x24` = 11000
+   - `rs2` = `x25` = 11001
+   - Offset = -4 = `1111111111111100`
+   - Split Immediate: `imm[12|10:5] = 111111, imm[4:1|11] = 111100`
+   - `func3` = 000
+
+   **32-bit representation:**
+   ```
+   111111_11001_11000_000_111100_1100011
+   ```
+
+15. **Instruction at address 0x1000e8:**
+   ```
+   AUIPC x26, 16
+   ```
+   - Type: U-Type
+   - Opcode: 0010111
+   - `rd` = `x26` = 11010
+   - Immediate = 16 << 12 = `000000000000000000010000000000`
+
+   **32-bit representation:**
+   ```
+   00000000000000000001_11010_0010111
+   ```
+
 </details>
 
 -------------------------------------------------
