@@ -106,7 +106,7 @@ The -Ofast flag typically reduces the number of instructions by using advanced t
 -------------------------------------------------
 
 <details>
-<summary><b>Task 1:</b> Task 2: Running SPIKE Simulation with Compiler Optimization and Analyzing RISC-V Object Dumps</summary>   
+<summary><b>Task 2:</b> Running SPIKE Simulation with Compiler Optimization and Analyzing RISC-V Object Dumps</summary>   
 <br>
 	
 ### C Language based Factorial Code
@@ -212,6 +212,15 @@ We have to do the same compilation of our code but this time using SPIKE debug c
 	```
 
 ![Spike debug -0fast format](https://github.com/adithyarg/samsung-riscv/blob/4734bb6b77648581fc02f866ed1411349eef1465/Task%20-%202/simple%20C%20program%20(Factorial%20of%205)/spike_debug_factorial_Ofast.png)
+
+
+</details>
+
+-------------------------------------------------
+
+<details>
+<summary><b>Task 3:</b> Identify 15 unique RISC-V instructions and decode their 32-bit binary representations</summary>   
+<br>
 
 
 </details>
