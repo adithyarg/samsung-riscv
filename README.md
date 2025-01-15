@@ -222,6 +222,60 @@ We have to do the same compilation of our code but this time using SPIKE debug c
 <summary><b>Task 3:</b> Identify 15 unique RISC-V instructions and decode their 32-bit binary representations</summary>   
 <br>
 
+### Brief Overview of RISC-V Instruction Formats
+**1. R-Type Instruction**
+
+* Purpose: Used for arithmetic and logical operations on registers.
+> * opcode (7 bits): Identifies the instruction type.
+> * rd (5 bits): Destination register to store results.
+> * func3 (3 bits): Specifies the operation type.
+> * rs1 (5 bits): First source register.
+> * rs2 (5 bits): Second source register.
+> * func7 (7 bits): Further specifies the operation type.
+Example: add x1, x2, x3 (Adds x2 and x3, stores in x1).
+
+**2. I-Type Instruction**
+* Purpose: Used for immediate and load operations involving registers and immediate values.
+Fields:
+> * opcode (7 bits): Identifies the instruction type.
+> * rd (5 bits): Destination register to store results.
+> * func3 (3 bits): Specifies the operation type.
+> * rs1 (5 bits): Source register.
+> * imm[11:0] (12 bits): Signed immediate value.
+> * Example: addi x1, x2, 10 (Adds x2 and 10, stores in x1).
+
+**3. S-Type Instruction**
+* Purpose: Used for store operations, writing data from a register to memory.
+> * opcode (7 bits): Identifies the instruction type.
+> * imm[11:5] (7 bits): Upper bits of the signed immediate value.
+> * rs1 (5 bits): Base address register.
+> * rs2 (5 bits): Source register (data to store).
+> * func3 (3 bits): Specifies the width/type of data (byte, half-word, word).
+> * imm[4:0] (5 bits): Lower bits of the signed immediate value.
+> * Example: sw x2, 8(x3) (Stores x2 at address x3 + 8).
+
+**4. B-Type Instruction**
+* Purpose: Used for conditional branching based on comparisons.
+> * opcode (7 bits): Identifies the instruction type.
+> * imm[12], imm[10:5], imm[4:1], imm[11]: Encodes a 12-bit signed immediate value.
+> * rs1 (5 bits): First source register.
+> * rs2 (5 bits): Second source register.
+> * func3 (3 bits): Specifies the comparison type (e.g., equal, less than).
+> * Example: beq x1, x2, label (Branches to label if x1 == x2).
+
+**5. U-Type Instruction**
+* Purpose: Used to load upper immediate values into registers.
+> * opcode (7 bits): Identifies the instruction type.
+> * rd (5 bits): Destination register to store results.
+> * imm[31:12] (20 bits): Upper 20 bits of the immediate value.
+> * Example: lui x1, 0x12345 (Loads 0x12345000 into x1).
+
+**6. J-Type Instruction**
+* Purpose: Used for unconditional jumps, including function calls.
+> * opcode (7 bits): Identifies the instruction type.
+> * rd (5 bits): Destination register (stores return address).
+> * imm[20], imm[10:1], imm[11], imm[19:12]: Encodes a 20-bit signed immediate value (jump offset).
+> * Example: jal x1, label (Jumps to label and stores return address in x1).
 
 </details>
 
