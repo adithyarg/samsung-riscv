@@ -279,7 +279,7 @@ Fields:
 
 
 ### Analysis of Instructions
-![Objdump of application code.](https://github.com/adithyarg/samsung-riscv/blob/8f1408c19e6ff497027abb9b34e66398c7efffc0/Task%20-%201/Code%20of%20C%20based%20lab.png)
+![Objdump of application code.](https://github.com/adithyarg/samsung-riscv/blob/b1359c7c46d669c55984484888cb12549cf77649/Task%20-%203/main_factorial_Ofast.png)
 
 1. **Instruction at address 0x1000b0:**
    ```
