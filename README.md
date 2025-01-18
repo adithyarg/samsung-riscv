@@ -541,7 +541,7 @@ $ sudo apt install gtkwave
 $ sudo apt-get install iverilog
 ```
 
-![gtkwave and iverilog Installation](https://github.com/maazm007/vsdsquadron-mini-internship/assets/83294849/0c3be648-2f4f-48d3-bb53-45bfc56ba9b2)
+![gtkwave and iverilog Installation](https://github.com/adithyarg/samsung-riscv/blob/5c538202438e6086e69d498de63dcf48f23a04f5/Task%20-%204/installed%20required%20things.png)
 
 
 ### Steps to perform functional simulation of RISCV  
