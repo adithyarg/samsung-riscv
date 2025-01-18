@@ -517,6 +517,10 @@ Fields:
    00000000000000000001_11010_0010111
    ```
 
+</details>
+
+-------------------------------------------------
+
 <details>
 <summary><b>Task 4:</b> Functional Simulation of RISC-V Core and observe the waveforms</summary>  
 <br> 
