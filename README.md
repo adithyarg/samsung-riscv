@@ -563,7 +563,7 @@ $ sudo apt-get install iverilog
 
 6. The GTKWave will be opened and following window will be appeared  
   
-![4](https://github.com/maazm007/vsdsquadron-mini-internship/assets/83294849/8cc283c6-87ed-485b-86d1-cdccb2de47d6)
+![4](https://github.com/adithyarg/samsung-riscv/blob/5fed5b8f5663158db8a9c37ec9ab2a20cba97e0c/Task%20-%204/gtk%20waveform.png)
 
 </details>
 
