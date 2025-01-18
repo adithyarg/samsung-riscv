@@ -517,6 +517,49 @@ Fields:
    00000000000000000001_11010_0010111
    ```
 
+<summary><b>Task 4:</b> Functional Simulation of RISC-V Core and observe the waveforms</summary>  
+<br> 
+
+### Install Required Things
+**1. Install ```GTKwave``` waveform viewer**
+
+*Use the following command to install GTKWave*  
+```  
+$ sudo apt update
+$ sudo apt install gtkwave  
+```
+
+**2. Install ```Icarus Verilog``` open source tool for simulation**
+
+*Use the following command to install Icarus Verilog*
+```  
+$ sudo apt-get install iverilog
+```
+
+![gtkwave and iverilog Installation](https://github.com/maazm007/vsdsquadron-mini-internship/assets/83294849/0c3be648-2f4f-48d3-bb53-45bfc56ba9b2)
+
+
+### Steps to perform functional simulation of RISCV  
+1. Create a new directory with your name ```mkdir <your_name>```
+2. Create two files by using ```touch``` command as ```adithya_rv32i.v``` and ```adithya_rv32i_tb.v```  
+3. Copy the code from the reference github repo and paste it in your verilog and testbench files  
+  
+  
+4. To run and simulate the verilog code, enter the following command:  
+	```
+	$ iverilog -o adithya_rv32i adithya_rv32i.v adithya_rv32i_tb.v
+	$ ./adithya_rv32i
+	```
+5. To see the simulation waveform in GTKWave, enter the following command:
+	```
+	$ gtkwave adithya_rv32i.vcd
+	```
+
+
+6. The GTKWave will be opened and following window will be appeared  
+  
+![4](https://github.com/maazm007/vsdsquadron-mini-internship/assets/83294849/8cc283c6-87ed-485b-86d1-cdccb2de47d6)
+
 </details>
 
 -------------------------------------------------
