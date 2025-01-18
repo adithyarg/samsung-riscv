@@ -568,7 +568,7 @@ $ sudo apt-get install iverilog
 #### *Analysing the Output Waveform of various instructions that we have covered in TASK-3*  
 **```Instruction 1: ADD R6, R2, R1```**  
   
-![ADD](https://github.com/maazm007/vsdsquadron-mini-internship/assets/83294849/fff34786-9f52-488b-827d-9516ba655ed1)
+![ADD](https://github.com/adithyarg/samsung-riscv/blob/a47f56cbfc3dee9520abf9f6d26479c327a7b411/Task%20-%204/instruction%201.png)
 
 **```Instruction 2: SUB R7, R1, R2```**  
   
