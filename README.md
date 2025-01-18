@@ -565,6 +565,48 @@ $ sudo apt-get install iverilog
   
 ![4](https://github.com/adithyarg/samsung-riscv/blob/5fed5b8f5663158db8a9c37ec9ab2a20cba97e0c/Task%20-%204/gtk%20waveform.png)
 
+#### *Analysing the Output Waveform of various instructions that we have covered in TASK-3*  
+**```Instruction 1: ADD R6, R2, R1```**  
+  
+![ADD](https://github.com/maazm007/vsdsquadron-mini-internship/assets/83294849/fff34786-9f52-488b-827d-9516ba655ed1)
+
+**```Instruction 2: SUB R7, R1, R2```**  
+  
+![SUB](https://github.com/maazm007/vsdsquadron-mini-internship/assets/83294849/a4ce7d65-1e61-4a35-9e9f-9941de9d6e19)
+
+**```Instruction 3: AND R8, R1, R3```**  
+
+![AND](https://github.com/maazm007/vsdsquadron-mini-internship/assets/83294849/28706b39-2cfa-4b29-b0ac-6c1bbc1cbbe9)
+
+**```Instruction 4: OR R9, R2, R5```**  
+
+![OR](https://github.com/maazm007/vsdsquadron-mini-internship/assets/83294849/617b18d4-35f8-42e4-8294-b8259042f1d6)
+
+**```Instruction 5: XOR R10, R1, R4```**  
+
+![XOR](https://github.com/maazm007/vsdsquadron-mini-internship/assets/83294849/724f6c43-6f5c-4be2-899a-061b202cbf34)
+
+**```Instruction 6: SLT R1, R2, R4```**  
+
+![SLT](https://github.com/maazm007/vsdsquadron-mini-internship/assets/83294849/6d0a3063-9a8c-49e2-84ab-eb8f99875d0a)
+
+**```Instruction 7: ADDI R12, R4, 5```**  
+
+![ADDI](https://github.com/maazm007/vsdsquadron-mini-internship/assets/83294849/d8287e99-05d4-4140-b4bc-844da65fe1c8)
+
+**```Instruction 8: BEQ R0, R0, 15```**  
+  
+![BEQ](https://github.com/maazm007/vsdsquadron-mini-internship/assets/83294849/583e69e5-88ef-4853-8a3b-a282bb8cc90f)
+ 
+**```Instruction 9: BNE R0, R1, 20```**
+
+![BNE](https://github.com/maazm007/vsdsquadron-mini-internship/assets/83294849/d09128b6-172a-4b3a-bfa6-2364142bb9f8)
+  
+**```Instruction 10: SLL R15, R1, R2```**  
+
+![SLL](https://github.com/maazm007/vsdsquadron-mini-internship/assets/83294849/885a63bc-485e-4594-8d15-52f2ec8da800)
+
+
 </details>
 
 -------------------------------------------------
