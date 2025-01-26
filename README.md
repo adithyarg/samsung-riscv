@@ -610,3 +610,147 @@ $ sudo apt-get install iverilog
 </details>
 
 -------------------------------------------------
+
+<details>
+<summary><b>Task 5:</b> Task 5 of this internship is to Implement Digital Circuits Using VSDSquadron Mini CH32V003X</summary>  
+  
+## Implementing BCD to Excess-3 using VSDSquadron Mini  
+  
+### **Overview**  
+This project implements a BCD to Excess-3 converter using the VSDSquadron Mini, which is a RISCV-based SoC development kit. The conversion of BCD to Excess-3 is an important operation in digital electronics that is widely used in many digital systems for encoding decimal numbers in BCD form and converting them into Excess-3 code, which is a self-complementing code used in arithmetic operations. This project will allow the use of buttons for the input of a 4-bit BCD number, with LEDs that are used for displaying the Excess-3 output. The process of encoding and decoding will be simulated using the digital logic behind the converter operation. The digital logic is utilized to practically show how number systems can be converted, making the process practical to learn the way of programming GPIO pins to operate as an input or an output. The functionality is simulated using the PlatformIO IDE, and the results are visually represented by LEDs, thereby showing the interplay between hardware and software for a real-world application in embedded systems.
+  
+### **Components Required**  
+* VSDSquadron Mini  
+* Push Buttons for Input of binary data (BCD Value)  
+* 4 LEDs for displaying the Output of Excess-3  
+* Breadboard  
+* Jumper Wires  
+* VS Code for Software Development  
+* PlatformIO Multi-framework professional IDE for simulating and uploading code to the VSDSquadron Mini. 
+  
+### **Circuit Connections**  
+* **Input:** Four single-bit inputs are connected to the GPIO pins of the VSDSquadron Mini via push buttons placed on the breadboard.  
+* **Outputs:** Four LEDs are connected to display the result of the BCD to Excess-3 conversion.
+* The GPIO pins are configured according to the reference manual, ensuring proper signal flow between the components. 
+  
+![BCD_TO_EXCESS_CIRCUIT](https://github.com/maazm007/vsdsquadron-mini-internship/assets/83294849/e91fafca-c9ff-4acc-b6c2-0d6028944f82)
+  
+### **Truth Table to Verify the BCD to Excess-3**  
+|  INPUT  |  OUTPUT  |
+|  **A**  |  **B**  |  **C**  |  **D**  |  **W**  |  **X**  |  **Y**  |  **Z**  |
+|  :----:  |  :----:  |  :----:  |  :----:  |  :----:  |  :----:  |  :----:  |  :----:  |
+|  0  |  0  |  0  |  0  |  0  |  0  |  1  |  1  |
+|  0  |  0  |  0  |  1  |  0  |  1  |  0  |  0  |
+|  0  |  0  |  1  |  0  |  0  |  1  |  0  |  1  |
+|  0  |  0  |  1  |  1  |  0  |  1  |  1  |  0  |
+|  0  |  1  |  0  |  0  |  0  |  1  |  1  |  1  |
+|  0  |  1  |  0  |  1  |  1  |  0  |  0  |  0  |
+|  0  |  1  |  1  |  0  |  1  |  0  |  0  |  1  |
+|  0  |  1  |  1  |  1  |  1  |  0  |  1  |  0  |
+|  1  |  0  |  0  |  0  |  1  |  0  |  1  |  1  |
+|  1  |  0  |  0  |  1  |  1  |  0  |  1  |  0  |
+|  1  |  0  |  1  |  0  |  -  |  -  |  -  |  -  |
+|  1  |  0  |  1  |  1  |  -  |  -  |  -  |  -  |
+|  1  |  1  |  0  |  0  |  -  |  -  |  -  |  -  |
+|  1  |  1  |  0  |  1  |  -  |  -  |  -  |  -  |
+|  1  |  1  |  1  |  0  |  -  |  -  |  -  |  -  |
+|  1  |  1  |  1  |  1  |  -  |  -  |  -  |  -  |
+  
+  
+### How to Program?  
+```
+// Full Adder Implementation
+
+// Included the requried header files
+#include<stdio.h>
+#include<debug.h>
+#include<ch32v00x.h>
+
+// Defining the Logic Gate Function 
+int and(int bit1, int bit2)
+{
+    int out = bit1 & bit2;
+    return out;
+}
+int or(int bit1, int bit2)
+{
+    int out = bit1 | bit2;
+    return out;
+}
+int xor(int bit1, int bit2)
+{
+    int out = bit1 ^ bit2;
+    return out;
+}
+
+// Configuring GPIO Pins
+void GPIO_Config(void)
+{
+    GPIO_InitTypeDef GPIO_InitStructure = {0}; // structure variable used for GPIO configuration
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD, ENABLE); // to enable the clock for port D
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE); // to enable the clock for port C
+    
+    // Input Pins Configuration
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU; // Defined as Input Type
+    GPIO_Init(GPIOD, &GPIO_InitStructure);
+
+    //Output Pins Configuration
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4 | GPIO_Pin_5;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; // Defined Output Type
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz; // Defined Speed
+    GPIO_Init(GPIOC, &GPIO_InitStructure);
+}
+
+// The MAIN function responsible for the execution of program
+int main()
+{
+    uint8_t A, B, Cin, Sum, Carry; // Declared the required variables
+    uint8_t p, q, r, s, t; 
+    NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
+    SystemCoreClockUpdate();
+    Delay_Init();
+    GPIO_Config();
+
+    while(1)
+    {
+        A = GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_1);
+        B = GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_2);
+        Cin = GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_3);
+        s = xor(A, B);
+        Sum = xor(Cin, s);
+        p = and(A, B);
+        q = and(B, Cin);
+        r = and(Cin, A);
+        t = or(p, q);
+        Carry = or(r, t);
+
+        /* SUM */
+        if(Sum == 0)
+        {
+            GPIO_WriteBit(GPIOC, GPIO_Pin_4, SET);
+        }
+        else
+        {
+            GPIO_WriteBit(GPIOC, GPIO_Pin_4, RESET);
+        }
+
+        /* CARRY */
+        if(Carry == 0)
+        {
+            GPIO_WriteBit(GPIOC, GPIO_Pin_5, SET);
+        }
+        else
+        {
+            GPIO_WriteBit(GPIOC, GPIO_Pin_5, RESET);
+        }
+    }
+}
+```  
+
+### Application Video  
+[Video Link](https://drive.google.com/file/d/1CI1DD0B-6AT6_vcHkUMITU1bolnwix8V/view?usp=sharing)
+
+</details>
+
+--------------------------------------------------------------
