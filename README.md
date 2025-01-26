@@ -631,82 +631,102 @@ This project implements a BCD to Excess-3 converter using the VSDSquadron Mini, 
 ### **Circuit Connections**  
 * **Input:** Four single-bit inputs are connected to the GPIO pins of the VSDSquadron Mini via push buttons placed on the breadboard.  
 * **Outputs:** Four LEDs are connected to display the result of the BCD to Excess-3 conversion.
-* The GPIO pins are configured according to the reference manual, ensuring proper signal flow between the components. 
+* The GPIO pins are configured according to the reference manual, ensuring proper signal flow between the components.
+
+| Component          | Pin Number  |
+|--------------------|-------------|
+| Push Button (A)    | PD1         |
+| Push Button (B)    | PD2         |
+| Push Button (C)    | PD3         |
+| Push Button (D)    | PD4         |
+| LED (Excess-3 Bit 3) | PC4         |
+| LED (Excess-3 Bit 2) | PC5         |
+| LED (Excess-3 Bit 1) | PC6         |
+| LED (Excess-3 Bit 0) | PC7         |
   
 ![BCD_TO_EXCESS_CIRCUIT](https://github.com/maazm007/vsdsquadron-mini-internship/assets/83294849/e91fafca-c9ff-4acc-b6c2-0d6028944f82)
   
-### **Truth Table to Verify the BCD to Excess-3**  
-|  INPUT  |  OUTPUT  |
-|  **A**  |  **B**  |  **C**  |  **D**  |  **W**  |  **X**  |  **Y**  |  **Z**  |
-|  :----:  |  :----:  |  :----:  |  :----:  |  :----:  |  :----:  |  :----:  |  :----:  |
-|  0  |  0  |  0  |  0  |  0  |  0  |  1  |  1  |
-|  0  |  0  |  0  |  1  |  0  |  1  |  0  |  0  |
-|  0  |  0  |  1  |  0  |  0  |  1  |  0  |  1  |
-|  0  |  0  |  1  |  1  |  0  |  1  |  1  |  0  |
-|  0  |  1  |  0  |  0  |  0  |  1  |  1  |  1  |
-|  0  |  1  |  0  |  1  |  1  |  0  |  0  |  0  |
-|  0  |  1  |  1  |  0  |  1  |  0  |  0  |  1  |
-|  0  |  1  |  1  |  1  |  1  |  0  |  1  |  0  |
-|  1  |  0  |  0  |  0  |  1  |  0  |  1  |  1  |
-|  1  |  0  |  0  |  1  |  1  |  0  |  1  |  0  |
-|  1  |  0  |  1  |  0  |  -  |  -  |  -  |  -  |
-|  1  |  0  |  1  |  1  |  -  |  -  |  -  |  -  |
-|  1  |  1  |  0  |  0  |  -  |  -  |  -  |  -  |
-|  1  |  1  |  0  |  1  |  -  |  -  |  -  |  -  |
-|  1  |  1  |  1  |  0  |  -  |  -  |  -  |  -  |
-|  1  |  1  |  1  |  1  |  -  |  -  |  -  |  -  |
+### **Truth Table to Verify the BCD to Excess-3** 
+
+The table below shows the conversion from Binary Coded Decimal (BCD) to Excess-3 code. The first four columns represent the **BCD Input**, while the last four columns represent the **Excess-3 Output**. Each BCD input is mapped to its corresponding Excess-3 output by adding 3 to the binary representation.
+
+| **A** | **B** | **C** | **D** | **W** | **X** | **Y** | **Z** |
+|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|
+|   0   |   0   |   0   |   0   |   0   |   0   |   1   |   1   |
+|   0   |   0   |   0   |   1   |   0   |   1   |   0   |   0   |
+|   0   |   0   |   1   |   0   |   0   |   1   |   0   |   1   |
+|   0   |   0   |   1   |   1   |   0   |   1   |   1   |   0   |
+|   0   |   1   |   0   |   0   |   0   |   1   |   1   |   1   |
+|   0   |   1   |   0   |   1   |   1   |   0   |   0   |   0   |
+|   0   |   1   |   1   |   0   |   1   |   0   |   0   |   1   |
+|   0   |   1   |   1   |   1   |   1   |   0   |   1   |   0   |
+|   1   |   0   |   0   |   0   |   1   |   0   |   1   |   1   |
+|   1   |   0   |   0   |   1   |   1   |   0   |   1   |   0   |
+|   1   |   0   |   1   |   0   |   -   |   -   |   -   |   -   |
+|   1   |   0   |   1   |   1   |   -   |   -   |   -   |   -   |
+|   1   |   1   |   0   |   0   |   -   |   -   |   -   |   -   |
+|   1   |   1   |   0   |   1   |   -   |   -   |   -   |   -   |
+|   1   |   1   |   1   |   0   |   -   |   -   |   -   |   -   |
+|   1   |   1   |   1   |   1   |   -   |   -   |   -   |   -   |
+
+---
+
+**Explanation:**
+- The BCD input consists of four bits: A, B, C, and D.
+- The Excess-3 output is also represented with four bits: W, X, Y, and Z.
+- The conversion is achieved by adding 3 (or 0011 in binary) to the BCD value. This converts the decimal range of 0–9 into a new range starting from 3–12.
+
+---
+
+#### Key Points:
+- The first column in the input is `A`, the second is `B`, the third is `C`, and the fourth is `D`.
+- The output columns `W`, `X`, `Y`, and `Z` represent the Excess-3 code corresponding to the input.
+- In cases where there are no valid output values (for example, when the input is `1010`), the output will be marked as `-`.
+
+
   
   
 ### How to Program?  
 ```
-// Full Adder Implementation
+// BCD to Excess-3 Implementation
 
-// Included the requried header files
-#include<stdio.h>
-#include<debug.h>
-#include<ch32v00x.h>
+#include <stdio.h>
+#include <debug.h>
+#include <ch32v00x.h>
 
-// Defining the Logic Gate Function 
-int and(int bit1, int bit2)
-{
-    int out = bit1 & bit2;
-    return out;
-}
-int or(int bit1, int bit2)
-{
-    int out = bit1 | bit2;
-    return out;
-}
-int xor(int bit1, int bit2)
-{
-    int out = bit1 ^ bit2;
-    return out;
-}
-
-// Configuring GPIO Pins
+// Defining the GPIO Pins for Inputs and Outputs
 void GPIO_Config(void)
 {
-    GPIO_InitTypeDef GPIO_InitStructure = {0}; // structure variable used for GPIO configuration
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD, ENABLE); // to enable the clock for port D
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE); // to enable the clock for port C
-    
-    // Input Pins Configuration
-    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3;
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU; // Defined as Input Type
+    GPIO_InitTypeDef GPIO_InitStructure = {0};
+
+    // Enable the clock for the required GPIO ports
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD, ENABLE); // Port D for input (push buttons)
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE); // Port C for output (LEDs)
+
+    // Input Pins Configuration (Push Buttons)
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4; // 4 input pins
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU; // Input with pull-up
     GPIO_Init(GPIOD, &GPIO_InitStructure);
 
-    //Output Pins Configuration
-    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4 | GPIO_Pin_5;
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; // Defined Output Type
-    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz; // Defined Speed
+    // Output Pins Configuration (LEDs)
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7; // 4 output pins for LEDs
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; // Push-pull output
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
     GPIO_Init(GPIOC, &GPIO_InitStructure);
 }
 
-// The MAIN function responsible for the execution of program
-int main()
+// BCD to Excess-3 Conversion Function
+int BCD_to_Excess3(int bcd)
 {
-    uint8_t A, B, Cin, Sum, Carry; // Declared the required variables
-    uint8_t p, q, r, s, t; 
+    return bcd + 3; // Add 3 to the BCD value to convert to Excess-3
+}
+
+// Main Function
+int main(void)
+{
+    uint8_t A, B, C, D, BCD_input, Excess3_output;
+
+    // Initialization
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
     SystemCoreClockUpdate();
     Delay_Init();
@@ -714,42 +734,37 @@ int main()
 
     while(1)
     {
-        A = GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_1);
-        B = GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_2);
-        Cin = GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_3);
-        s = xor(A, B);
-        Sum = xor(Cin, s);
-        p = and(A, B);
-        q = and(B, Cin);
-        r = and(Cin, A);
-        t = or(p, q);
-        Carry = or(r, t);
+        // Read the input from GPIO pins (representing BCD input)
+        A = GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_1); // BCD bit 3
+        B = GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_2); // BCD bit 2
+        C = GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_3); // BCD bit 1
+        D = GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_4); // BCD bit 0
 
-        /* SUM */
-        if(Sum == 0)
+        // Combine inputs to form a BCD value (0-15)
+        BCD_input = (A << 3) | (B << 2) | (C << 1) | D;
+
+        // Convert BCD to Excess-3 (Only valid for 0-9, so wrap excess values)
+        if (BCD_input > 9)
         {
-            GPIO_WriteBit(GPIOC, GPIO_Pin_4, SET);
+            Excess3_output = 0x0; // If input is greater than 9, reset to 0 (Invalid BCD input)
         }
         else
         {
-            GPIO_WriteBit(GPIOC, GPIO_Pin_4, RESET);
+            Excess3_output = BCD_to_Excess3(BCD_input);
         }
 
-        /* CARRY */
-        if(Carry == 0)
-        {
-            GPIO_WriteBit(GPIOC, GPIO_Pin_5, SET);
-        }
-        else
-        {
-            GPIO_WriteBit(GPIOC, GPIO_Pin_5, RESET);
-        }
+        // Display the Excess-3 output on LEDs (4 bits)
+        GPIO_WriteBit(GPIOC, GPIO_Pin_4, (Excess3_output >> 3) & 0x01); // LED 1
+        GPIO_WriteBit(GPIOC, GPIO_Pin_5, (Excess3_output >> 2) & 0x01); // LED 2
+        GPIO_WriteBit(GPIOC, GPIO_Pin_6, (Excess3_output >> 1) & 0x01); // LED 3
+        GPIO_WriteBit(GPIOC, GPIO_Pin_7, Excess3_output & 0x01);         // LED 4
     }
 }
+
 ```  
 
-### Application Video  
-[Video Link](https://drive.google.com/file/d/1CI1DD0B-6AT6_vcHkUMITU1bolnwix8V/view?usp=sharing)
+### Working Video  
+[Video Link]()
 
 </details>
 
