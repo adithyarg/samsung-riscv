@@ -7,7 +7,7 @@ The program is led by the esteemed Kunal Ghosh, a trailblazer in the VLSI domain
 
 **Name:** ADITHYA  
 **College:** Sahyadri College of Engineering and Management  
-**Branch:** Electronics and Communication
+**Branch:** Electronics and Communication         
 **Year:** 2nd Year         
 **Email:** adithyar.ec23@sahyadri.edu.in / adithyarg14@gmail.com   
 
