@@ -644,7 +644,7 @@ This project implements a BCD to Excess-3 converter using the VSDSquadron Mini, 
 | LED (Excess-3 Bit 1) | PC5         |
 | LED (Excess-3 Bit 0) | PC6         |
   
-![BCD_TO_EXCESS_CIRCUIT](https://github.com/maazm007/vsdsquadron-mini-internship/assets/83294849/e91fafca-c9ff-4acc-b6c2-0d6028944f82)
+![BCD_TO_EXCESS_CIRCUIT](https://github.com/adithyarg/samsung-riscv/blob/84ee359335510d92ae4ba43ca1ebfd4d9103cd15/Task%20-%205/Bcd_to_Excess.png)
   
 ### **Truth Table to Verify the BCD to Excess-3** 
 
