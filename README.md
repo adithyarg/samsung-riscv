@@ -678,7 +678,7 @@ The relay module, controlled by the VSD Squadron, ensures automatic motor shutdo
 ---
   
   
-### How to Program fro VSD Squadron Mini Board?  
+### How to Program for VSD Squadron Mini Board?  
 ```
 #include <stdio.h>
 #include <stdint.h>
@@ -803,7 +803,7 @@ int main() {
 ```
 
 
-### How to Program fro ESP 32 Board?  
+### How to Program for ESP 32 Board?  
 ```
 #include <WiFi.h>
 #include <WebServer.h>
