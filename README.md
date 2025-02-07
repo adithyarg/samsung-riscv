@@ -614,39 +614,53 @@ $ sudo apt-get install iverilog
 -------------------------------------------------
 
 <details>
-<summary><b>Task 5:</b> Task 5 of this internship is to Implement Digital Circuits Using VSDSquadron Mini CH32V003X</summary>  
+<summary><b>Task 5:</b> Task 5 of this internship is to Implementing an Energy Monitoring & Automation System Using VSD Squadron Mini CH32V003X</summary>  
   
-## Implementing BCD to Excess-3 using VSDSquadron Mini  
+## Implementing an Energy Monitoring & Automation System using VSDSquadron Mini  
   
 ### **Overview**  
-This project implements a BCD to Excess-3 converter using the VSDSquadron Mini, which is a RISCV-based SoC development kit. The conversion of BCD to Excess-3 is an important operation in digital electronics that is widely used in many digital systems for encoding decimal numbers in BCD form and converting them into Excess-3 code, which is a self-complementing code used in arithmetic operations. This project will allow the use of buttons for the input of a 4-bit BCD number, with LEDs that are used for displaying the Excess-3 output. The process of encoding and decoding will be simulated using the digital logic behind the converter operation. The digital logic is utilized to practically show how number systems can be converted, making the process practical to learn the way of programming GPIO pins to operate as an input or an output. The functionality is simulated using the PlatformIO IDE, and the results are visually represented by LEDs, thereby showing the interplay between hardware and software for a real-world application in embedded systems.
+This project implements a Smart Energy Monitoring & Automation System using the VSD Squadron Mini CH32V003X, a RISC-V-based SoC development kit. The system is designed to monitor voltage, current, power, and temperature in real-time, enabling efficient energy tracking and automated motor control.
+
+The VSD Squadron Mini collects data from sensors, including a Voltage Sensor (25V), ACS712 Current Sensor, and DHT22 Temperature Sensor. It processes the data and transmits it via UART to an ESP32, which hosts a local web server for real-time visualization of energy parameters. The web dashboard displays live voltage, current, power, temperature, and energy consumption, along with a remote control option for the motor.
+
+The relay module, controlled by the VSD Squadron, ensures automatic motor shutdown if the temperature exceeds a predefined threshold, preventing overheating and protecting the system. This project integrates hardware and software to demonstrate practical embedded system applications in energy management, automation, and IoT using RISC-V microcontrollers.
   
 ### **Components Required**  
-* VSDSquadron Mini  
-* Push Buttons for Input of binary data (BCD Value)  
-* 4 LEDs for displaying the Output of Excess-3  
-* Breadboard  
-* Jumper Wires  
+* VSD Squadron Mini CH32V003X – RISC-V-based SoC development kit for processing and control  
+* Voltage Sensor (25V) – Measures the input voltage to monitor energy consumption  
+* ACS712 Current Sensor – Measures the current drawn by the motor 
+* DHT22 Temperature Sensor – Monitors motor temperature to prevent overheating
+* ESP32 – Hosts a local web server to display real-time data and enable remote control
+* Relay Module – Controls motor operation based on temperature threshold
+* DC Motor – The load whose energy parameters are being monitored
+* 9V Battery – Provides power to the motor and circuit 
+* Jumper Wires – For making necessary connections on the breadboard
+* Breadboard – For circuit prototyping
+* USB-to-Serial Adapter – For programming and debugging the VSD Squadron Mini  
 * VS Code for Software Development  
-* PlatformIO Multi-framework professional IDE for simulating and uploading code to the VSDSquadron Mini. 
+* PlatformIO Multi-framework professional IDE for simulating and uploading code to the VSDSquadron Mini.
+* HTML, CSS, and JavaScript – For designing the ESP32 web dashboard
   
 ### **Circuit Connections**  
-* **Input:** Four single-bit inputs are connected to the GPIO pins of the VSDSquadron Mini via push buttons placed on the breadboard.  
-* **Outputs:** Four LEDs are connected to display the result of the BCD to Excess-3 conversion.
-* The GPIO pins are configured according to the reference manual, ensuring proper signal flow between the components.
+* **Input:** Voltage, Current, and Temperature sensors are connected to the VSD Squadron Mini for real-time monitoring. 
+* **Processing:** The VSD Squadron Mini calculates the sensor values and transmits the data to the ESP32 via UART. 
+* **Output:** The ESP32 hosts a web dashboard displaying live sensor data and provides a remote control button for the relay. 
+* **Relay Control:** The relay module is controlled by the VSD Squadron Mini based on temperature thresholds.
 
-| Component          | Pin Number  |
-|--------------------|-------------|
-| Push Button (A)    | PD1         |
-| Push Button (B)    | PD2         |
-| Push Button (C)    | PD3         |
-| Push Button (D)    | PD4         |
-| LED (Excess-3 Bit 3) | PC3         |
-| LED (Excess-3 Bit 2) | PC4         |
-| LED (Excess-3 Bit 1) | PC5         |
-| LED (Excess-3 Bit 0) | PC6         |
+| Component                  | Pin Number  |
+|----------------------------|-------------|
+| Voltage Sensor (VCC)       | 5V          |
+| Voltage Sensor (OUT)       | PC1         |
+| Current Sensor (VCC)       | 5V          |
+| Current Sensor (OUT)       | PC2         |
+| Temperature Sensor (DHT22) | PD1         |
+| ESP32 UART TX              | RX (PD3)    |
+| ESP32 UART RX              | TX (PD2)    |
+| Relay Module IN            | PC5         |
+| Motor Positive Terminal    | Relay NO    |
+| Motor Negative Terminal    | GND         |
   
-![BCD_TO_EXCESS_CIRCUIT](https://github.com/adithyarg/samsung-riscv/blob/84ee359335510d92ae4ba43ca1ebfd4d9103cd15/Task%20-%205/Bcd_to_Excess.png)
+![Energy Monitoring & Automation System](https://github.com/adithyarg/samsung-riscv/blob/84ee359335510d92ae4ba43ca1ebfd4d9103cd15/Task%20-%205/Bcd_to_Excess.png)
   
 ### **Truth Table to Verify the BCD to Excess-3** 
 
