@@ -661,131 +661,244 @@ The relay module, controlled by the VSD Squadron, ensures automatic motor shutdo
 | Motor Negative Terminal    | GND         |
   
 ![Energy Monitoring & Automation System](https://github.com/adithyarg/samsung-riscv/blob/84ee359335510d92ae4ba43ca1ebfd4d9103cd15/Task%20-%205/Bcd_to_Excess.png)
+
   
-### **Truth Table to Verify the BCD to Excess-3** 
-
-The table below shows the conversion from Binary Coded Decimal (BCD) to Excess-3 code. The first four columns represent the **BCD Input**, while the last four columns represent the **Excess-3 Output**. Each BCD input is mapped to its corresponding Excess-3 output by adding 3 to the binary representation.
-
-| **A** | **B** | **C** | **D** | **W** | **X** | **Y** | **Z** |
-|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|
-|   0   |   0   |   0   |   0   |   0   |   0   |   1   |   1   |
-|   0   |   0   |   0   |   1   |   0   |   1   |   0   |   0   |
-|   0   |   0   |   1   |   0   |   0   |   1   |   0   |   1   |
-|   0   |   0   |   1   |   1   |   0   |   1   |   1   |   0   |
-|   0   |   1   |   0   |   0   |   0   |   1   |   1   |   1   |
-|   0   |   1   |   0   |   1   |   1   |   0   |   0   |   0   |
-|   0   |   1   |   1   |   0   |   1   |   0   |   0   |   1   |
-|   0   |   1   |   1   |   1   |   1   |   0   |   1   |   0   |
-|   1   |   0   |   0   |   0   |   1   |   0   |   1   |   1   |
-|   1   |   0   |   0   |   1   |   1   |   1   |   0   |   0   |
-|   1   |   0   |   1   |   0   |   -   |   -   |   -   |   -   |
-|   1   |   0   |   1   |   1   |   -   |   -   |   -   |   -   |
-|   1   |   1   |   0   |   0   |   -   |   -   |   -   |   -   |
-|   1   |   1   |   0   |   1   |   -   |   -   |   -   |   -   |
-|   1   |   1   |   1   |   0   |   -   |   -   |   -   |   -   |
-|   1   |   1   |   1   |   1   |   -   |   -   |   -   |   -   |
-
 ---
 
 **Explanation:**
-- The BCD input consists of four bits: A, B, C, and D.
-- The Excess-3 output is also represented with four bits: W, X, Y, and Z.
-- The conversion is achieved by adding 3 (or 0011 in binary) to the BCD value. This converts the decimal range of 0–9 into a new range starting from 3–12.
+- The system takes input from voltage, current, and temperature sensors.
+- The VSDSquadron Mini processes these sensor values and transmits data to the ESP32 via UART communication.
+- The ESP32 hosts a local web server, displaying real-time data on a dashboard.
+- The dashboard shows Voltage, Current, Power, Temperature, and Energy Consumption over time.
+- A threshold mechanism is implemented:
+- Temperature Threshold: If the battery overheats, the system automatically stops.
+- Voltage and Current Monitoring: Used for energy calculations but does not trigger a shutdown.
+- The relay module is controlled by the VSDSquadron Mini, allowing remote ON/OFF switching of the motor through the web interface.
 
 ---
-
-#### Key Points:
-- The first column in the input is `A`, the second is `B`, the third is `C`, and the fourth is `D`.
-- The output columns `W`, `X`, `Y`, and `Z` represent the Excess-3 code corresponding to the input.
-- In cases where there are no valid output values (for example, when the input is `1010`), the output will be marked as `-`.
-
-
   
   
-### How to Program?  
+### How to Program fro VSD Squadron Mini Board?  
 ```
-// BCD to Excess-3 Converter Implementation
+#include <stdio.h>
+#include <stdint.h>
+#include "ch32v00x.h"
+#include "dht.h" // Include library for DHT22
 
-// Include the required header files
-#include<stdio.h>
-#include<debug.h>
-#include<ch32v00x.h>
+#define RELAY_PIN GPIO_Pin_5 // PC5 for Relay Control
+#define TEMP_THRESHOLD 60    // Overheat Protection Limit
 
-// Defining the Logic Gate Functions
-int and(int bit1, int bit2)
-{
-    int out = bit1 & bit2;
-    return out;
-}
+// Function Prototypes
+void GPIO_Config(void);
+void UART_Config(void);
+void ADC_Config(void);
+void sendToESP32(float voltage, float current, float temperature);
 
-int or(int bit1, int bit2)
-{
-    int out = bit1 | bit2;
-    return out;
-}
+// Initialize GPIO for Relay, Sensors
+void GPIO_Config(void) {
+    GPIO_InitTypeDef GPIO_InitStructure = {0};
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD, ENABLE);
 
-int xor(int bit1, int bit2)
-{
-    int out = bit1 ^ bit2;
-    return out;
-}
-
-// Configuring GPIO Pins
-void GPIO_Config(void)
-{
-    GPIO_InitTypeDef GPIO_InitStructure = {0}; // structure variable used for GPIO configuration
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD, ENABLE); // enable clock for port D
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE); // enable clock for port C
-    
-    // Input Pins Configuration
-    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4;
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU; // Input Type
-    GPIO_Init(GPIOD, &GPIO_InitStructure);
-
-    // Output Pins Configuration
-    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6;
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; // Output Type
-    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz; // Output Speed
+    // Relay Output
+    GPIO_InitStructure.GPIO_Pin = RELAY_PIN;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
     GPIO_Init(GPIOC, &GPIO_InitStructure);
 }
 
-// The MAIN function responsible for the execution of the program
-int main()
-{
-    uint8_t A, B, C, D;  // Declare the variables for the inputs
-    uint8_t Excess3_0, Excess3_1, Excess3_2, Excess3_3;  // Declare variables for Excess-3 output
-    uint8_t tmp;
+// Initialize UART for Communication with ESP32
+void UART_Config(void) {
+    GPIO_InitTypeDef GPIO_InitStructure;
+    USART_InitTypeDef USART_InitStructure;
+    
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD, ENABLE);
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);
 
-    // Initialize system, GPIO, etc.
-    NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
-    SystemCoreClockUpdate();
-    Delay_Init();
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2; // TX (PD2)
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_Init(GPIOD, &GPIO_InitStructure);
+
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3; // RX (PD3)
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
+    GPIO_Init(GPIOD, &GPIO_InitStructure);
+
+    USART_InitStructure.USART_BaudRate = 115200;
+    USART_InitStructure.USART_WordLength = USART_WordLength_8b;
+    USART_InitStructure.USART_StopBits = USART_StopBits_1;
+    USART_InitStructure.USART_Parity = USART_Parity_No;
+    USART_InitStructure.USART_Mode = USART_Mode_Tx | USART_Mode_Rx;
+    USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+    USART_Init(USART1, &USART_InitStructure);
+    USART_Cmd(USART1, ENABLE);
+}
+
+// Read Analog Data from Voltage and Current Sensors
+void ADC_Config(void) {
+    ADC_InitTypeDef ADC_InitStructure;
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
+
+    ADC_InitStructure.ADC_Mode = ADC_Mode_Independent;
+    ADC_InitStructure.ADC_ScanConvMode = DISABLE;
+    ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;
+    ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_None;
+    ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
+    ADC_InitStructure.ADC_NbrOfChannel = 1;
+    ADC_Init(ADC1, &ADC_InitStructure);
+    ADC_Cmd(ADC1, ENABLE);
+}
+
+float readVoltage() {
+    ADC_RegularChannelConfig(ADC1, ADC_Channel_11, 1, ADC_SampleTime_55Cycles5); // PC1
+    ADC_SoftwareStartConvCmd(ADC1, ENABLE);
+    while (!ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC));
+    return (ADC_GetConversionValue(ADC1) * 25.0) / 4095.0; // Scale for 25V sensor
+}
+
+float readCurrent() {
+    ADC_RegularChannelConfig(ADC1, ADC_Channel_12, 1, ADC_SampleTime_55Cycles5); // PC2
+    ADC_SoftwareStartConvCmd(ADC1, ENABLE);
+    while (!ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC));
+    return ((ADC_GetConversionValue(ADC1) * 5.0) / 4095.0) - 2.5; // ACS712 scaling
+}
+
+float readTemperature() {
+    return DHT_Read_Temperature(PD1); // Read DHT22 Sensor on PD1
+}
+
+// Send Sensor Data to ESP32 via UART
+void sendToESP32(float voltage, float current, float temperature) {
+    char buffer[50];
+    sprintf(buffer, "V:%.2f I:%.2f T:%.2f\n", voltage, current, temperature);
+    for (int i = 0; buffer[i] != '\0'; i++) {
+        USART_SendData(USART1, buffer[i]);
+        while (USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
+    }
+}
+
+// Main Program Execution
+int main() {
+    SystemInit();
     GPIO_Config();
-
-    while(1)
-    {
-        // Read the input values from the push buttons
-        A = GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_1);
-        B = GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_2);
-        C = GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_3);
-        D = GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_4);
-
-        // BCD to Excess-3 Conversion Logic
-        Excess3_0 = xor(xor(A, C), D);  // Bit 0
-        Excess3_1 = xor(xor(B, C), D);  // Bit 1
-        Excess3_2 = xor(xor(A, B), C);  // Bit 2
-        Excess3_3 = xor(xor(A, B), D);  // Bit 3
-
-        // Set the corresponding LEDs based on Excess-3 values
-        GPIO_WriteBit(GPIOC, GPIO_Pin_3, Excess3_3 == 0 ? RESET : SET);  // Bit 3
-        GPIO_WriteBit(GPIOC, GPIO_Pin_4, Excess3_2 == 0 ? RESET : SET);  // Bit 2
-        GPIO_WriteBit(GPIOC, GPIO_Pin_5, Excess3_1 == 0 ? RESET : SET);  // Bit 1
-        GPIO_WriteBit(GPIOC, GPIO_Pin_6, Excess3_0 == 0 ? RESET : SET);  // Bit 0
+    UART_Config();
+    ADC_Config();
+    
+    while (1) {
+        float voltage = readVoltage();
+        float current = readCurrent();
+        float temperature = readTemperature();
+        
+        // Overheat Protection - Turn OFF Relay if Temp > 60°C
+        if (temperature > TEMP_THRESHOLD) {
+            GPIO_ResetBits(GPIOC, RELAY_PIN);
+        }
+        
+        sendToESP32(voltage, current, temperature);
     }
 }
 
 
-```  
+
+```
+
+
+### How to Program fro ESP 32 Board?  
+```
+#include <WiFi.h>
+#include <WebServer.h>
+#include <HardwareSerial.h>
+
+// Replace with your WiFi credentials
+const char* ssid = "Your_SSID";
+const char* password = "Your_PASSWORD";
+
+WebServer server(80);
+HardwareSerial mySerial(2); // UART2 for communication with VSD Board
+
+#define RELAY_PIN 5 // Define the GPIO pin for the relay
+
+float voltage = 0.0, current = 0.0, temperature = 0.0;
+bool relayState = false;
+
+void setup() {
+  Serial.begin(115200);
+  mySerial.begin(115200, SERIAL_8N1, 16, 17); // UART2 -> RX: GPIO16, TX: GPIO17
+  pinMode(RELAY_PIN, OUTPUT);
+  digitalWrite(RELAY_PIN, LOW); // Ensure relay is off at startup
+
+  WiFi.begin(ssid, password);
+  Serial.print("Connecting to WiFi...");
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("\nConnected to WiFi");
+  
+  // Web Server Routes
+  server.on("/", handleRoot);
+  server.on("/on", handleRelayOn);
+  server.on("/off", handleRelayOff);
+  server.begin();
+  Serial.println("Web Server Started");
+}
+
+void loop() {
+  server.handleClient();
+  readSensorData(); // Read incoming sensor data from VSD
+}
+
+// Function to read voltage, current, and temperature from VSD
+void readSensorData() {
+  if (mySerial.available()) {
+    String data = mySerial.readStringUntil('\n');
+    sscanf(data.c_str(), "V:%f I:%f T:%f", &voltage, &current, &temperature);
+    Serial.printf("Received -> Voltage: %.2fV, Current: %.2fA, Temperature: %.2f°C\n", voltage, current, temperature);
+    
+    // Auto Shutdown on Overheat
+    if (temperature > 60.0) {
+      digitalWrite(RELAY_PIN, LOW);
+      relayState = false;
+      Serial.println("Overheat detected! Relay turned OFF.");
+    }
+  }
+}
+
+// Web Page
+void handleRoot() {
+  String html = "<html><head><title>ESP32 Control</title>";
+  html += "<style>body{font-family:Arial;text-align:center;} button{font-size:20px;margin:10px;padding:10px;}</style>";
+  html += "</head><body>";
+  html += "<h1>ESP32 Web Relay Control</h1>";
+  html += "<h2>Voltage: " + String(voltage) + " V</h2>";
+  html += "<h2>Current: " + String(current) + " A</h2>";
+  html += "<h2>Temperature: " + String(temperature) + " °C</h2>";
+  html += "<h2>Relay Status: " + String(relayState ? "ON" : "OFF") + "</h2>";
+  html += "<a href='/on'><button style='background:green;color:white;'>TURN ON</button></a>";
+  html += "<a href='/off'><button style='background:red;color:white;'>TURN OFF</button></a>";
+  html += "</body></html>";
+  server.send(200, "text/html", html);
+}
+
+// Turn Relay ON
+void handleRelayOn() {
+  digitalWrite(RELAY_PIN, HIGH);
+  relayState = true;
+  server.sendHeader("Location", "/", true);
+  server.send(302, "text/plain", "");
+}
+
+// Turn Relay OFF
+void handleRelayOff() {
+  digitalWrite(RELAY_PIN, LOW);
+  relayState = false;
+  server.sendHeader("Location", "/", true);
+  server.send(302, "text/plain", "");
+}
+
+
+
+``` 
 
 ### Working Video  
 [Video Link]()
