@@ -681,120 +681,199 @@ The relay module, controlled by the VSD Squadron, ensures automatic motor shutdo
 ### How to Program for VSD Squadron Mini Board?  
 ```
 #include <stdio.h>
-#include <stdint.h>
-#include "ch32v00x.h"
-#include "dht.h" // Include library for DHT22
+#include <debug.h>
+#include <ch32v00x.h>
 
-#define RELAY_PIN GPIO_Pin_5 // PC5 for Relay Control
-#define TEMP_THRESHOLD 60    // Overheat Protection Limit
-
-// Function Prototypes
+// --- Function Prototypes ---
 void GPIO_Config(void);
-void UART_Config(void);
 void ADC_Config(void);
-void sendToESP32(float voltage, float current, float temperature);
+void UART_Config(void);
+void Relay_Config(void);
+void Delay_Ms(uint32_t ms);
+void Delay_Init(void);
+uint16_t ReadADC(void);
+void SendUART(const char *str);
 
-// Initialize GPIO for Relay, Sensors
-void GPIO_Config(void) {
-    GPIO_InitTypeDef GPIO_InitStructure = {0};
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD, ENABLE);
+// --- Global Variables ---
+// We'll use three consecutive ADC channels (configured in ADC_Config)
+// Conversion order: first conversion: Battery Voltage (PC0)
+//                   second: Current (PC1)
+//                   third: Temperature (PC2)
 
-    // Relay Output
-    GPIO_InitStructure.GPIO_Pin = RELAY_PIN;
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-    GPIO_Init(GPIOC, &GPIO_InitStructure);
+// --- ADC Read Helper ---
+// For simplicity, we'll trigger a conversion and wait for EOC each time we call ReadADC.
+// (In a real design, you might use DMA or scan mode with interrupts.)
+uint16_t ReadADC(void)
+{
+    // Start conversion
+    ADC_SoftwareStartConvCmd(ADC1, ENABLE);
+    // Wait for conversion to complete
+    while(!ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC));
+    return ADC_GetConversionValue(ADC1);
 }
 
-// Initialize UART for Communication with ESP32
-void UART_Config(void) {
+// --- GPIO Configuration (for any digital I/O if needed) ---
+void GPIO_Config(void)
+{
+    // Enable clocks for GPIOD and GPIOC
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD, ENABLE);
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
+    
+    // (Additional GPIO configurations can go here if needed)
+}
+
+// --- ADC Configuration ---
+void ADC_Config(void)
+{
+    ADC_InitTypeDef ADC_InitStructure;
+    GPIO_InitTypeDef GPIO_InitStructure;
+    
+    // Enable clock for ADC1 and for GPIOC (for analog input on PC0, PC1, PC2)
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
+    
+    // Configure PC0, PC1, PC2 as analog input
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
+    GPIO_Init(GPIOC, &GPIO_InitStructure);
+    
+    // ADC configuration
+    ADC_InitStructure.ADC_Mode = ADC_Mode_Independent;
+    ADC_InitStructure.ADC_ScanConvMode = ENABLE;  // Using scan conversion for three channels
+    ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;
+    ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_None;
+    ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
+    ADC_InitStructure.ADC_NbrOfChannel = 3;
+    ADC_Init(ADC1, &ADC_InitStructure);
+    
+    // Configure channels:
+    // Channel order: 1st conversion: PC0, 2nd: PC1, 3rd: PC2.
+    // (Channel numbers depend on your MCU’s datasheet; here we assume channels 10, 11, 12.)
+    ADC_RegularChannelConfig(ADC1, ADC_Channel_10, 1, ADC_SampleTime_55Cycles5); // PC0
+    ADC_RegularChannelConfig(ADC1, ADC_Channel_11, 2, ADC_SampleTime_55Cycles5); // PC1
+    ADC_RegularChannelConfig(ADC1, ADC_Channel_12, 3, ADC_SampleTime_55Cycles5); // PC2
+    
+    ADC_Cmd(ADC1, ENABLE);
+    
+    // Calibration
+    ADC_ResetCalibration(ADC1);
+    while(ADC_GetResetCalibrationStatus(ADC1));
+    ADC_StartCalibration(ADC1);
+    while(ADC_GetCalibrationStatus(ADC1));
+    
+    // Start conversion in continuous mode
+    ADC_SoftwareStartConvCmd(ADC1, ENABLE);
+}
+
+// --- UART Configuration (for PD5: TX, PD6: RX) ---
+void UART_Config(void)
+{
     GPIO_InitTypeDef GPIO_InitStructure;
     USART_InitTypeDef USART_InitStructure;
     
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD, ENABLE);
+    // Enable clock for USART1 and GPIOD (for PD5 and PD6)
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);
-
-    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2; // TX (PD2)
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD, ENABLE);
+    
+    // Configure PD5 (TX) as alternate function push-pull
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5;
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
     GPIO_Init(GPIOD, &GPIO_InitStructure);
-
-    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3; // RX (PD3)
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
+    
+    // Configure PD6 (RX) as input floating
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
     GPIO_Init(GPIOD, &GPIO_InitStructure);
-
+    
+    // USART configuration
     USART_InitStructure.USART_BaudRate = 115200;
     USART_InitStructure.USART_WordLength = USART_WordLength_8b;
     USART_InitStructure.USART_StopBits = USART_StopBits_1;
     USART_InitStructure.USART_Parity = USART_Parity_No;
-    USART_InitStructure.USART_Mode = USART_Mode_Tx | USART_Mode_Rx;
     USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+    USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
     USART_Init(USART1, &USART_InitStructure);
     USART_Cmd(USART1, ENABLE);
 }
 
-// Read Analog Data from Voltage and Current Sensors
-void ADC_Config(void) {
-    ADC_InitTypeDef ADC_InitStructure;
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
-
-    ADC_InitStructure.ADC_Mode = ADC_Mode_Independent;
-    ADC_InitStructure.ADC_ScanConvMode = DISABLE;
-    ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;
-    ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_None;
-    ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
-    ADC_InitStructure.ADC_NbrOfChannel = 1;
-    ADC_Init(ADC1, &ADC_InitStructure);
-    ADC_Cmd(ADC1, ENABLE);
+// --- Relay Configuration (PD3 as output) ---
+void Relay_Config(void)
+{
+    GPIO_InitTypeDef GPIO_InitStructure;
+    
+    // Ensure clock for GPIOD is enabled (already enabled in GPIO_Config)
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_Init(GPIOD, &GPIO_InitStructure);
+    
+    // Set relay off initially (assuming active HIGH turns relay off)
+    GPIO_WriteBit(GPIOD, GPIO_Pin_3, Bit_RESET);
 }
 
-float readVoltage() {
-    ADC_RegularChannelConfig(ADC1, ADC_Channel_11, 1, ADC_SampleTime_55Cycles5); // PC1
-    ADC_SoftwareStartConvCmd(ADC1, ENABLE);
-    while (!ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC));
-    return (ADC_GetConversionValue(ADC1) * 25.0) / 4095.0; // Scale for 25V sensor
-}
-
-float readCurrent() {
-    ADC_RegularChannelConfig(ADC1, ADC_Channel_12, 1, ADC_SampleTime_55Cycles5); // PC2
-    ADC_SoftwareStartConvCmd(ADC1, ENABLE);
-    while (!ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC));
-    return ((ADC_GetConversionValue(ADC1) * 5.0) / 4095.0) - 2.5; // ACS712 scaling
-}
-
-float readTemperature() {
-    return DHT_Read_Temperature(PD1); // Read DHT22 Sensor on PD1
-}
-
-// Send Sensor Data to ESP32 via UART
-void sendToESP32(float voltage, float current, float temperature) {
-    char buffer[50];
-    sprintf(buffer, "V:%.2f I:%.2f T:%.2f\n", voltage, current, temperature);
-    for (int i = 0; buffer[i] != '\0'; i++) {
-        USART_SendData(USART1, buffer[i]);
-        while (USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
+// --- UART Send Helper ---
+void SendUART(const char *str)
+{
+    while(*str)
+    {
+        USART_SendData(USART1, *str++);
+        while(USART_GetFlagStatus(USART1, USART_FLAG_TC) == RESET);
     }
 }
 
-// Main Program Execution
-int main() {
-    SystemInit();
-    GPIO_Config();
-    UART_Config();
-    ADC_Config();
+// --- Main Function ---
+int main(void)
+{
+    uint16_t rawVoltage, rawCurrent, rawTemp;
+    float voltage, current, temperature, power;
+    char buffer[120];
     
-    while (1) {
-        float voltage = readVoltage();
-        float current = readCurrent();
-        float temperature = readTemperature();
+    // System and peripheral initialization
+    SystemInit();
+    Delay_Init();
+    GPIO_Config();
+    ADC_Config();
+    UART_Config();
+    Relay_Config();
+    
+    while(1)
+    {
+        // --- Read sensor values from ADC ---
+        // Because we are in continuous conversion mode with 3 channels,
+        // call ReadADC() three times in order:
+        rawVoltage = ReadADC();  // Reading battery voltage from PC0
+        rawCurrent = ReadADC();  // Reading current from PC1
+        rawTemp    = ReadADC();  // Reading temperature from PC2
         
-        // Overheat Protection - Turn OFF Relay if Temp > 60°C
-        if (temperature > TEMP_THRESHOLD) {
-            GPIO_ResetBits(GPIOC, RELAY_PIN);
+        // --- Convert raw ADC values to real units ---
+        // (These conversion factors are examples)
+        voltage = rawVoltage * (9.0 / 4095.0);       // Scale to battery voltage (9V max)
+        current = rawCurrent * (1.0 / 4095.0);         // Dummy scaling: 0-1A range
+        temperature = rawTemp * (100.0 / 4095.0);      // Dummy scaling: 0-100°C range
+        power = voltage * current;                     // Power in Watts
+        
+        // --- Send sensor data as JSON via UART ---
+        sprintf(buffer, "{\"voltage\":%.2f,\"current\":%.2f,\"temperature\":%.2f,\"power\":%.2f}\r\n",
+                voltage, current, temperature, power);
+        SendUART(buffer);
+        
+        // --- Check for incoming UART commands ---
+        if(USART_GetFlagStatus(USART1, USART_FLAG_RXNE))
+        {
+            char cmd = USART_ReceiveData(USART1);
+            // '1' turns relay ON; '0' turns relay OFF.
+            if(cmd == '1')
+            {
+                GPIO_SetBits(GPIOD, GPIO_Pin_3);
+            }
+            else if(cmd == '0')
+            {
+                GPIO_ResetBits(GPIOD, GPIO_Pin_3);
+            }
         }
         
-        sendToESP32(voltage, current, temperature);
+        Delay_Ms(1000);  // Update every 1 second
     }
 }
 
@@ -807,93 +886,127 @@ int main() {
 ```
 #include <WiFi.h>
 #include <WebServer.h>
-#include <HardwareSerial.h>
 
-// Replace with your WiFi credentials
-const char* ssid = "Your_SSID";
-const char* password = "Your_PASSWORD";
+// ----- Wi-Fi Credentials -----
+const char* ssid = "your_SSID";
+const char* password = "your_PASSWORD";
 
+// ----- Create a WebServer on port 80 -----
 WebServer server(80);
-HardwareSerial mySerial(2); // UART2 for communication with VSD Board
 
-#define RELAY_PIN 5 // Define the GPIO pin for the relay
+// Global variable to store sensor data from VSD board
+// We'll assume sensorData arrives as a JSON string, e.g.,
+// {"voltage":9.00,"current":0.50,"temperature":25.00,"power":4.50}
+String sensorData = "{}";
 
-float voltage = 0.0, current = 0.0, temperature = 0.0;
-bool relayState = false;
+// ----- UART Configuration for VSD Board Communication -----
+// Using Serial2 on ESP32. Adjust RX/TX pins as needed.
+#define VSD_RX_PIN 16  // ESP32 RX: receives data from VSD board TX
+#define VSD_TX_PIN 17  // ESP32 TX: sends data to VSD board RX
 
+// ----- Helper Function to Parse JSON Data -----
+// (A quick and dirty parsing. In production, consider a proper JSON library)
+float getValue(String json, const char* key) {
+  int keyIndex = json.indexOf(key);
+  if(keyIndex == -1) return 0.0;
+  int colonIndex = json.indexOf(":", keyIndex);
+  int commaIndex = json.indexOf(",", colonIndex);
+  int endBrace = json.indexOf("}", colonIndex);
+  int endIndex = (commaIndex == -1) ? endBrace : commaIndex;
+  String valueStr = json.substring(colonIndex + 1, endIndex);
+  valueStr.trim();
+  return valueStr.toFloat();
+}
+
+// ----- Web Page Handler -----
+void handleRoot() {
+  // Parse sensor values from JSON string
+  float voltage = getValue(sensorData, "voltage");
+  float current = getValue(sensorData, "current");
+  float temperature = getValue(sensorData, "temperature");
+  float power = getValue(sensorData, "power");
+
+  // Build a professional looking webpage using HTML and CSS
+  String page = "<!DOCTYPE html><html lang='en'><head><meta charset='UTF-8'>";
+  page += "<meta name='viewport' content='width=device-width, initial-scale=1.0'>";
+  page += "<meta http-equiv='refresh' content='5'>";
+  page += "<title>Power Supply Dashboard</title>";
+  page += "<style>";
+  page += "body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; }";
+  page += ".container { width: 90%; margin: auto; overflow: hidden; }";
+  page += "header { background: #333; color: #fff; padding-top: 30px; min-height: 70px; border-bottom: #0779e4 3px solid; }";
+  page += "header h1 { text-align: center; margin: 0; font-size: 36px; }";
+  page += "table { width: 100%; border-collapse: collapse; margin: 20px 0; }";
+  page += "table, th, td { border: 1px solid #ddd; }";
+  page += "th, td { padding: 12px; text-align: center; }";
+  page += "tr:nth-child(even) { background-color: #f2f2f2; }";
+  page += ".btn { display: inline-block; background: #0779e4; color: #fff; padding: 10px 20px; margin: 10px; text-decoration: none; border-radius: 5px; }";
+  page += ".btn:hover { background: #055a9c; }";
+  page += "</style></head><body>";
+  page += "<header><div class='container'><h1>Power Supply Dashboard</h1></div></header>";
+  page += "<div class='container'>";
+  page += "<h2>Sensor Readings</h2>";
+  page += "<table>";
+  page += "<tr><th>Parameter</th><th>Value</th><th>Unit</th></tr>";
+  page += "<tr><td>Voltage</td><td>" + String(voltage, 2) + "</td><td>V</td></tr>";
+  page += "<tr><td>Current</td><td>" + String(current, 2) + "</td><td>A</td></tr>";
+  page += "<tr><td>Temperature</td><td>" + String(temperature, 2) + "</td><td>&deg;C</td></tr>";
+  page += "<tr><td>Power</td><td>" + String(power, 2) + "</td><td>W</td></tr>";
+  page += "</table>";
+  page += "<h2>Control Relay</h2>";
+  page += "<a href='/relay_on' class='btn'>Turn Relay On</a>";
+  page += "<a href='/relay_off' class='btn'>Turn Relay Off</a>";
+  page += "</div></body></html>";
+
+  server.send(200, "text/html", page);
+}
+
+void handleRelayOn() {
+  Serial2.write('1');  // Send '1' to VSD board to turn relay ON
+  server.sendHeader("Location", "/", true);
+  server.send(302, "text/plain", "");
+}
+
+void handleRelayOff() {
+  Serial2.write('0');  // Send '0' to VSD board to turn relay OFF
+  server.sendHeader("Location", "/", true);
+  server.send(302, "text/plain", "");
+}
+
+// ----- Setup -----
 void setup() {
   Serial.begin(115200);
-  mySerial.begin(115200, SERIAL_8N1, 16, 17); // UART2 -> RX: GPIO16, TX: GPIO17
-  pinMode(RELAY_PIN, OUTPUT);
-  digitalWrite(RELAY_PIN, LOW); // Ensure relay is off at startup
-
+  // Initialize Serial2 for communication with the VSD board
+  Serial2.begin(115200, SERIAL_8N1, VSD_RX_PIN, VSD_TX_PIN);
+  
+  // Connect to Wi-Fi
   WiFi.begin(ssid, password);
-  Serial.print("Connecting to WiFi...");
+  Serial.print("Connecting to WiFi");
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
   }
-  Serial.println("\nConnected to WiFi");
+  Serial.println();
+  Serial.println("Connected! IP address: " + WiFi.localIP().toString());
   
-  // Web Server Routes
+  // Set up web server routes
   server.on("/", handleRoot);
-  server.on("/on", handleRelayOn);
-  server.on("/off", handleRelayOff);
+  server.on("/relay_on", handleRelayOn);
+  server.on("/relay_off", handleRelayOff);
   server.begin();
-  Serial.println("Web Server Started");
+  Serial.println("Web server started.");
 }
 
+// ----- Main Loop -----
 void loop() {
   server.handleClient();
-  readSensorData(); // Read incoming sensor data from VSD
-}
-
-// Function to read voltage, current, and temperature from VSD
-void readSensorData() {
-  if (mySerial.available()) {
-    String data = mySerial.readStringUntil('\n');
-    sscanf(data.c_str(), "V:%f I:%f T:%f", &voltage, &current, &temperature);
-    Serial.printf("Received -> Voltage: %.2fV, Current: %.2fA, Temperature: %.2f°C\n", voltage, current, temperature);
-    
-    // Auto Shutdown on Overheat
-    if (temperature > 60.0) {
-      digitalWrite(RELAY_PIN, LOW);
-      relayState = false;
-      Serial.println("Overheat detected! Relay turned OFF.");
-    }
+  
+  // Check for incoming sensor data from VSD board on Serial2
+  if (Serial2.available()) {
+    sensorData = Serial2.readStringUntil('\n');
+    sensorData.trim();
+    Serial.println("Received from VSD: " + sensorData);
   }
-}
-
-// Web Page
-void handleRoot() {
-  String html = "<html><head><title>ESP32 Control</title>";
-  html += "<style>body{font-family:Arial;text-align:center;} button{font-size:20px;margin:10px;padding:10px;}</style>";
-  html += "</head><body>";
-  html += "<h1>ESP32 Web Relay Control</h1>";
-  html += "<h2>Voltage: " + String(voltage) + " V</h2>";
-  html += "<h2>Current: " + String(current) + " A</h2>";
-  html += "<h2>Temperature: " + String(temperature) + " °C</h2>";
-  html += "<h2>Relay Status: " + String(relayState ? "ON" : "OFF") + "</h2>";
-  html += "<a href='/on'><button style='background:green;color:white;'>TURN ON</button></a>";
-  html += "<a href='/off'><button style='background:red;color:white;'>TURN OFF</button></a>";
-  html += "</body></html>";
-  server.send(200, "text/html", html);
-}
-
-// Turn Relay ON
-void handleRelayOn() {
-  digitalWrite(RELAY_PIN, HIGH);
-  relayState = true;
-  server.sendHeader("Location", "/", true);
-  server.send(302, "text/plain", "");
-}
-
-// Turn Relay OFF
-void handleRelayOff() {
-  digitalWrite(RELAY_PIN, LOW);
-  relayState = false;
-  server.sendHeader("Location", "/", true);
-  server.send(302, "text/plain", "");
 }
 
 
