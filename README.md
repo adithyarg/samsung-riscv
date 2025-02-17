@@ -650,13 +650,13 @@ The relay module, controlled by the VSD Squadron, ensures automatic motor shutdo
 | Component                  | Pin Number  |
 |----------------------------|-------------|
 | Voltage Sensor (VCC)       | 5V          |
-| Voltage Sensor (OUT)       | PC1         |
+| Voltage Sensor (OUT)       | PC0         |
 | Current Sensor (VCC)       | 5V          |
-| Current Sensor (OUT)       | PC2         |
-| Temperature Sensor (DHT22) | PD1         |
-| ESP32 UART TX              | RX (PD3)    |
-| ESP32 UART RX              | TX (PD2)    |
-| Relay Module IN            | PC5         |
+| Current Sensor (OUT)       | PC1         |
+| Temperature Sensor (DHT22) | PC2         |
+| ESP32 UART TX              | RX (PD6)    |
+| ESP32 UART RX              | TX (PD5)    |
+| Relay Module IN            | PD3         |
 | Motor Positive Terminal    | Relay NO    |
 | Motor Negative Terminal    | GND         |
   
