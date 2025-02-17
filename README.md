@@ -660,7 +660,7 @@ The relay module, controlled by the VSD Squadron, ensures automatic motor shutdo
 | Motor Positive Terminal    | Relay NO    |
 | Motor Negative Terminal    | GND         |
   
-![Energy Monitoring & Automation System](https://github.com/adithyarg/samsung-riscv/blob/6e1ed2bb914adf5980606fcd803e8d332bb5ae09/Task%20-%205/Circuit%20Diagram.jpg)
+![Energy Monitoring & Automation System](https://github.com/adithyarg/samsung-riscv/blob/dd8637262493cb75cde414f96b2e215d6c1125ad/Task%20-%205/Circuit%20Diagram%202.0.jpg)
 
   
 ---
