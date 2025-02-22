@@ -913,12 +913,6 @@ By leveraging the VSD Squadron Mini, this system provides reliable data acquisit
 
 ### How to Program for ESP 32 Board?  
 ```
-/*******************************************************************************
- * ESP32 Web Server + UART Reader
- * Receives sensor data from VSD Squadron via Serial
- * Displays sensor readings on a webpage and provides relay control
- *******************************************************************************/
-
 #include <WiFi.h>
 #include <WebServer.h>
 
