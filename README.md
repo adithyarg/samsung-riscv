@@ -662,8 +662,12 @@ The relay module, controlled by the VSD Squadron, ensures automatic motor shutdo
   
 ![Energy Monitoring & Automation System](https://github.com/adithyarg/samsung-riscv/blob/dd8637262493cb75cde414f96b2e215d6c1125ad/Task%20-%205/Circuit%20Diagram%202.0.jpg)
 
-  
----
+</details>
+
+--------------------------------------------------------------
+
+<details>
+<summary><b>Task 6:</b> Task 6 of this internship is to Implementing an Energy Monitoring & Automation System Using VSD Squadron Mini and Application Video</summary>  
 
 **Explanation:**
 - The system takes input from voltage, current, and temperature sensors.
@@ -1102,3 +1106,4 @@ void parseSensorData(const String &dataLine) {
 </details>
 
 --------------------------------------------------------------
+
