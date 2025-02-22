@@ -1118,7 +1118,7 @@ void parseSensorData(const String &dataLine) {
 ``` 
 
 ### Working Video  
-[Video Link](https://drive.google.com/drive/folders/1jLbWHpoGpOX7e65LjiXLVVcyqz6CiS4_?usp=sharing)
+[Video Link](https://github.com/adithyarg/samsung-riscv/blob/5bfe13353f90b239df0e7fb9b5237b5f431f1d06/Task%20-%206/Task%206%20Application%20Video.mp4)
 
 </details>
 
