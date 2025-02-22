@@ -623,7 +623,7 @@ This project implements a Smart Energy Monitoring & Automation System using the 
 
 The VSD Squadron Mini collects data from sensors, including a Voltage Sensor (25V), ACS712 Current Sensor, and DHT22 Temperature Sensor. It processes the data and transmits it via UART to an ESP32, which hosts a local web server for real-time visualization of energy parameters. The web dashboard displays live voltage, current, power, temperature, and energy consumption, along with a remote control option for the motor.
 
-The relay module, controlled by the VSD Squadron, ensures automatic motor shutdown if the temperature exceeds a predefined threshold, preventing overheating and protecting the system. This project integrates hardware and software to demonstrate practical embedded system applications in energy management, automation, and IoT using RISC-V microcontrollers.
+The relay module, controlled by the VSD Squadron. This project integrates hardware and software to demonstrate practical embedded system applications in energy management, automation, and IoT using RISC-V microcontrollers.
   
 ### **Components Required**  
 * VSD Squadron Mini CH32V003X – RISC-V-based SoC development kit for processing and control  
@@ -662,25 +662,48 @@ The relay module, controlled by the VSD Squadron, ensures automatic motor shutdo
   
 ![Energy Monitoring & Automation System](https://github.com/adithyarg/samsung-riscv/blob/dd8637262493cb75cde414f96b2e215d6c1125ad/Task%20-%205/Circuit%20Diagram%202.0.jpg)
 
-</details>
-
---------------------------------------------------------------
-
-<details>
-<summary><b>Task 6:</b> Task 6 of this internship is to Implementing an Energy Monitoring & Automation System Using VSD Squadron Mini and Application Video</summary>  
-
 **Explanation:**
 - The system takes input from voltage, current, and temperature sensors.
 - The VSDSquadron Mini processes these sensor values and transmits data to the ESP32 via UART communication.
 - The ESP32 hosts a local web server, displaying real-time data on a dashboard.
 - The dashboard shows Voltage, Current, Power, Temperature, and Energy Consumption over time.
 - A threshold mechanism is implemented:
-- Temperature Threshold: If the battery overheats, the system automatically stops.
+- Temperature Threshold: If the battery overheats, the system manual switch option of the motor through the web interface.
 - Voltage and Current Monitoring: Used for energy calculations but does not trigger a shutdown.
 - The relay module is controlled by the VSDSquadron Mini, allowing remote ON/OFF switching of the motor through the web interface.
 
 ---
-  
+
+</details>
+
+--------------------------------------------------------------
+
+<details>
+<summary><b>Task 6:</b> Energy Monitoring & Automation with VSD Squadron Mini</summary>  
+
+### **Introduction** 
+This project focuses on developing a Smart Energy Monitoring & Automation System using the VSD Squadron Mini CH32V003X, a powerful RISC-V-based SoC development kit. The system is engineered to track voltage, current, power, and temperature in real-time, ensuring precise energy monitoring and intelligent motor automation.
+
+By leveraging the VSD Squadron Mini, this system provides reliable data acquisition from various sensors and transmits the collected information to an ESP32, which acts as a local web server for real-time visualization. The system also features manual motor control via a relay module, ensuring safety by preventing overheating.
+
+### **System Architecture** 
+**1. Data Acquisition**
+* Voltage Sensor (25V): Monitors real-time voltage levels to assess power consumption.
+* ACS712 Current Sensor: Measures the electrical current drawn by the motor, helping to calculate power usage.
+* DHT22 Temperature Sensor: Monitors ambient temperature near the motor to prevent overheating.
+
+**2. Processing Unit**
+* The VSD Squadron Mini CH32V003X reads sensor values and processes them efficiently.
+* It transmits the processed data via UART communication to the ESP32 for further use.
+
+**3. Web Dashboard & Data Visualization**
+* The ESP32 functions as a web server, allowing users to monitor energy parameters through a custom-built dashboard.
+* The dashboard, developed using HTML, CSS, and JavaScript, displays real-time graphs and sensor readings, including
+- Voltage
+- Current
+- Power Consumption
+- Temperature
+- Energy Consumption Over Time
   
 ### How to Program for VSD Squadron Mini Board?  
 ```
