@@ -1124,3 +1124,12 @@ void parseSensorData(const String &dataLine) {
 
 --------------------------------------------------------------
 
+<details>
+<summary>Acknowledgement</summary>
+<br>
+
+>I’m grateful to Kunal Ghosh Sir for an incredible internship experience on RISC-V Architecture using VSDSquadron Mini. This program gave me the perfect kickstart into the world of RISC-V, and I truly enjoyed every moment of it.
+
+>A big thanks to VLSI System Design for launching such a phenomenal research internship and to Samsung for sponsoring the VSD board! 
+
+</details>
